@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 # Push current main to https://github.com/yuhemao/helm-stack using GITHUB_TOKEN (Classic ghp_ PAT).
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+if [[ -f "$ROOT/.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "$ROOT/.env"
+  set +a
+fi
 TOKEN="${GITHUB_TOKEN:-${GH_TOKEN:-}}"
 if [[ -z "$TOKEN" ]]; then
-  echo "Missing GITHUB_TOKEN. Add a Classic PAT (ghp_ with repo scope) as a Cloud Agent secret, then start a NEW agent." >&2
+  echo "Missing GITHUB_TOKEN. Put ghp_… in .env (repo scope), or export GITHUB_TOKEN." >&2
   exit 1
 fi
 if [[ "$TOKEN" == ghu_* ]]; then
