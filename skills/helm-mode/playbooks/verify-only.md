@@ -1,10 +1,10 @@
 # Playbook: Verify only
 
-Acceptance / demo readiness. No feature work unless a fix is required to finish verification setup.
+Acceptance pass / demo readiness. Do not add features.
 
 ## Steps
 
 1. **Load truth** — Read `docs/helm-spec.md`. If missing, stop and say so.
-2. **Verify** — `verify-outcome` against all P0 ACs (or the operator-named subset).
-3. **Critique** — Optional `product-critique` for gaps the checklist missed.
-4. **Gate** — Pass/fail table in plain language. List exact click paths for anything the environment could not run.
+2. **Verify** — Run `verify-outcome` against P0 ACs (+ smoke if asked).
+3. **Optional eng pass** — If failures look like regressions from recent code, run `eng-critique` then fix only what verify proved — or stop and recommend **fix-outcome**.
+4. **Gate** — `plain-status` with the AC table. Waiting on you = click confirmations only when the environment could not run.

@@ -1,24 +1,25 @@
 ---
 name: build-outcome
-description: "Implement the current vertical slice toward observable acceptance. Decide technical plumbing without asking the operator. Use when helm-mode is ready to code a slice."
+description: "Implement the current vertical slice toward observable acceptance. Use shape-before-code for non-trivial work; decide plumbing via decision-budget; hand off to eng-critique and verify-outcome."
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Build outcome
 
-Implement **only** the current slice.
+Implement **only** the current slice. Prefer the `builder` model role when configured.
 
 ## Rules
 
-1. Read `docs/helm-spec.md` and the active slice ACs first.
+1. Read `docs/helm-spec.md` and the active slice ACs (and `docs/helm-now.md` if present).
 2. Stay inside **stack constraints**.
-3. Apply **decision-budget**: do not ask plumbing questions.
-4. Smallest change that makes the ACs reachable.
-5. Create a git checkpoint when the host allows (commit) before risky rewrites.
-6. When implementation is ready for checking, stop and hand off to **verify-outcome** (or run it yourself if the playbook says so).
+3. Non-trivial slice → ensure **`shape-before-code`** already ran (or run it now). Trivial → `skip` with reason.
+4. Apply **decision-budget**: no plumbing questions to the human; uncertain tech → model gate.
+5. Smallest change that makes the ACs reachable. Prefer behavior-level checks when cheap.
+6. Git checkpoint when the host allows before risky rewrites.
+7. When implementation is ready: hand off to **`eng-critique`**, then **`verify-outcome`** (or run them if the playbook says so). Do not self-declare done.
 
 ## Reporting
 

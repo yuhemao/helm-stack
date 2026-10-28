@@ -4,7 +4,7 @@ description: "Break work into vertical slices: thin end-to-end increments with t
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Vertical slice
@@ -22,7 +22,7 @@ A valid slice:
 
 ## Output
 
-Write a short ordered list into the chat (and optionally a `## Delivery slices` section in `docs/helm-spec.md`):
+Write a short ordered list into the chat (and optionally a short `## Delivery slices` section in `docs/helm-spec.md` — not a second authority file):
 
 ```text
 Slice 1: <outcome> — AC…

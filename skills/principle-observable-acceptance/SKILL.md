@@ -2,6 +2,9 @@
 name: principle-observable-acceptance
 description: "Define and verify done via clickable or measurable outcomes, not code aesthetics. Use when writing ACs or claiming success."
 license: MIT
+metadata:
+  author: helm-stack
+  version: "1.1.0"
 ---
 
 # Observable acceptance

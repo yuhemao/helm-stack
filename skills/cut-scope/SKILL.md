@@ -4,7 +4,7 @@ description: "Hammer scope to a honest MVP: P0/P1/P2, non-goals, and appetite. U
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Cut scope

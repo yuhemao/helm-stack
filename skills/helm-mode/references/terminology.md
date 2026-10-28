@@ -1,13 +1,17 @@
 # Terminology for precise steering
 
-Use these terms in specs, questions, and agent-to-agent briefs. They reduce ambiguity better than casual synonyms.
+Use these terms in the living contract, questions, and agent-to-agent briefs. They reduce ambiguity better than casual synonyms.
 
-## Product & scope
+## Product & authority
 
 | Term | Meaning | Prefer over |
 |---|---|---|
-| **Living spec** | The single current product truth file (`docs/helm-spec.md`) | "docs", "PRD folder", "notes" |
-| **Source of truth** | The artifact that wins when chat and files disagree | "what we said earlier" |
+| **Living product contract** / **Living spec** | Thin L0a file (`docs/helm-spec.md`): goal, non-goals, P0, observable ACs | "PRD folder", "full PRD", "docs" |
+| **Thin PRD core** | Same idea: the useful core of a PRD (what/not/accept), not an enterprise PRD stack | ChatPRD / multi-doc PRD rituals |
+| **Source of truth (product)** | L0a wins when chat and files disagree on product | "what we said earlier" |
+| **Technical authority (L0b)** | Code + runnable checks | Parallel `architecture.md` as truth |
+| **Working memory (L1)** | Optional `docs/helm-now.md` for active slice only | Second product bible |
+| **Disposable (L2)** | Scratch plans, bakeoffs, chat essays — not authority | Syncing scratch into SoT |
 | **Non-goals** | Explicitly out of scope for this version | "maybe later stuff" |
 | **MVP** | Smallest shippable slice that proves the core job | "first version with many features" |
 | **Scope hammer** | Cutting features to fit a fixed appetite | "simplify a bit" |
@@ -15,7 +19,7 @@ Use these terms in specs, questions, and agent-to-agent briefs. They reduce ambi
 | **P0 / P1 / P2** | Must-have / should / nice | "important-ish" |
 | **Constraint** | Hard limit (stack, platform, budget, compliance) | "preference" |
 | **Assumption** | Believed true without proof; must be labeled | silent guessing |
-| **Open question** | Unresolved item that blocks a product gate | vague "TBD everywhere" |
+| **Open product question** | Unresolved item that blocks a **human** product gate | parking tech unknowns for the human |
 
 ## Acceptance & quality
 
@@ -27,16 +31,18 @@ Use these terms in specs, questions, and agent-to-agent briefs. They reduce ambi
 | **Happy path** | Main success flow | "normal use" |
 | **Edge case** | Rare but valid input/state | "weird stuff" |
 | **Failure mode** | How the system behaves when something breaks | "if it errors" |
-| **Definition of done** | Slice exit gate (ACs green + verify-outcome report) | "feels finished" |
+| **Definition of done** | ACs green + verify (+ eng-critique Must-fix cleared for non-trivial work) | "feels finished" |
 | **Regression** | Previously passing behavior now fails | "something broke" |
 | **Smoke test** | Minimal path proving the app stands up | "quick look" |
-| **Oracle** | Independent check of correctness (tests, second model, human click) | author self-claim |
+| **Oracle** | Independent check (tests, second model, human click) | author self-claim |
+| **Eng critique** | Model-gate engineering adversarial review | asking the human to read the diff |
+| **Product critique** | Model-gate product/AC adversarial review | cheerleading self-check |
 
 ## Delivery shape
 
 | Term | Meaning | Prefer over |
 |---|---|---|
-| **Vertical slice** | Thin end-to-end increment (UI→logic→data) that is demoable | "finish backend first" |
+| **Vertical slice** | Thin end-to-end increment that is demoable | "finish backend first" |
 | **Horizontal layer** | One technical layer across many features | layering by default |
 | **Increment** | One shippable step with its own ACs | "phase 2 vaguely" |
 | **Spike / prototype** | Throwaway experiment to buy information | "start the real architecture" |
@@ -51,18 +57,18 @@ Use these terms in specs, questions, and agent-to-agent briefs. They reduce ambi
 |---|---|---|
 | **Playbook** | Named step sequence for a job type | ad-hoc vibes only |
 | **Router skill** | Main skill that loads others (`helm-mode`) | memorizing every skill |
-| **Decision budget** | Which decisions escalate to the human | asking everything |
-| **Product gate** | Stop that needs a human product choice | technical bike-shedding |
+| **Decision budget** | Human vs model vs act classification | asking everything |
+| **Human gate** | Stop that needs the operator (scope/UX/acceptance/irreversible) | technical bike-shedding |
+| **Model gate** | Technical judgment routed to stronger/independent models | asking the non-technical human |
 | **Blind critique** | Reviewer does not see author rationalizations first | same agent grading itself warmly |
-| **Dual-try / bakeoff** | Two short attempts; pick by outcome | endless debate |
-| **Fresh thread** | New chat with only living spec + current slice | infinite polluted context |
+| **Dual-try / bakeoff** | Two short attempts; pick by outcome (ux or eng rules) | endless debate |
+| **Fresh thread** | New chat with only L0a + current slice | infinite polluted context |
 | **Context debt** | Accumulated docs/chats that make change expensive | "more documentation is safer" |
 | **Premise failure** | Foundational assumption was wrong | "small bug" |
-| **Recovery** | Revert + rewrite truth + rebuild (not patch sprawl) | "fix forward forever" |
+| **Recovery** | Revert + rewrite L0a + discard L1/L2 + rebuild | "fix forward forever" |
 | **Test-time scaling** | Spend more samples/checks at inference to raise quality | one-shot hope |
-| **Verifier** | Role/system that checks candidates against ACs | author saying done |
+| **Verifier** | Role that checks candidates against ACs | author saying done |
 | **Harness** | Agent runtime: instructions + tools + model | "the AI app" vaguely |
-| **Tool-using agent** | Model that can edit files, run commands, browse | chatbot-only |
 
 ## Stack vocabulary (enough to steer, not to code)
 
@@ -78,7 +84,3 @@ Use these terms in specs, questions, and agent-to-agent briefs. They reduce ambi
 | **Preview deploy** | Temporary URL for a change | try before production |
 | **CORS** | Browser rule for cross-site API calls | common "frontend can't call backend" cause |
 | **Migration** | Controlled database schema change | changing stored shape safely |
-
-## Anti-terms (avoid in ACs)
-
-Do not use these as acceptance language: *elegant, clean, scalable, intuitive, fast, done properly, tech debt free, production-ready, simple, user-friendly* — unless paired with a measurable observable.

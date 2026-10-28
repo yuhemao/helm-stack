@@ -4,7 +4,7 @@ description: "Restate the operator's goal and problem in plain language before b
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Restatement
@@ -24,5 +24,5 @@ Before writing product code or a long spec, play the request back.
 
 - Plain language. No file tours.
 - If a critical product unknown exists, ask at most 3 A/B questions with recommendations, then stop for answers.
-- If unknowns are technical, **do not ask** — list them as assumptions you will decide later under decision-budget.
+- If unknowns are technical, **do not ask** — list them as assumptions for **model gates** (`shape-before-code` / `eng-critique`) under decision-budget.
 - Do not create extra markdown files in this skill; restatement lives in the chat (and feeds `write-spec`).

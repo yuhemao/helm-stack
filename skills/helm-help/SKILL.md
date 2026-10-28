@@ -1,11 +1,11 @@
 ---
 name: helm-help
-description: "Orient the operator in helm-stack: which playbook, how to prompt /helm-mode, how recovery works. Use for /helm-help or questions about helm-stack. Does not start implementation."
+description: "Orient the operator in helm-stack: which playbook, how to prompt /helm-mode, model gates vs human gates, how recovery works. Use for /helm-help. Does not start implementation."
 license: MIT
 disable-model-invocation: true
 metadata:
   author: helm-stack
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Helm help
@@ -14,7 +14,7 @@ Answer how to use helm-stack. **Do not start the product work.** Hand the operat
 
 ## Default answer
 
-For almost all real work: use **`/helm-mode`** and describe the goal + done check. The mode loads sub-skills.
+For almost all real work: use **`/helm-mode`** and describe the goal + done check. The mode loads sub-skills and runs model gates.
 
 ## Map
 
@@ -25,8 +25,9 @@ For almost all real work: use **`/helm-mode`** and describe the goal + done chec
 | Something broken in the product flow | `/helm-mode` + "fix outcome" + what they clicked |
 | Direction changed / earlier idea wrong | `/helm-mode` + "change direction" or "recover" |
 | Just check if it works | `/helm-mode` + "verify only" |
-| Two UX approaches unsure | `/helm-mode` + "dual path" |
-| Stop being asked jargon questions | Steer: `apply decision-budget` |
+| Two approaches unsure | `/helm-mode` + "dual path" + say UX vs technical uncertainty |
+| Pick models for builder/critics | `/setup-helm` |
+| Stop being asked jargon questions | Steer: `apply decision-budget` / `apply model-not-human-for-tech` |
 | Docs/chat became a swamp | `/helm-mode` recover |
 
 Read [`../helm-mode/SKILL.md`](../helm-mode/SKILL.md) and [`../helm-mode/references/prompting.md`](../helm-mode/references/prompting.md) before quoting details.

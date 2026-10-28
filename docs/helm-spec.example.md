@@ -1,4 +1,5 @@
-# Example living spec (copy to docs/helm-spec.md and edit)
+# Example living product contract (copy to docs/helm-spec.md and edit)
+# Thin L0a: what / not / accept — not a full enterprise PRD, not a tech design bible.
 
 ## Goal
 Paste a long URL, get a short link that redirects.
