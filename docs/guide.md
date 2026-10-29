@@ -18,7 +18,7 @@ I do not read code. You own implementation and engineering review via models.
 Only ask me product/UX gates. Done when: …
 ```
 
-4. Expect a thin living product contract at `docs/helm-spec.md`, model-gated quality loops, and slice-by-slice verify reports in plain language.
+4. Expect one living product contract (existing `PRD.md` / `spec.md` / `helm-spec.md` all OK; pin with `docs/helm.contract`), model-gated quality loops, and plain-language verify reports. Do **not** maintain two product-authority copies.
 
 ## Design intent
 
@@ -35,12 +35,16 @@ helm-stack does **not** mean "fewer quality practices." It means **quality pract
 
 | Layer | File | Role |
 |---|---|---|
-| L0a | `docs/helm-spec.md` | Thin living product contract (PRD **core**: what / not / accept) — single product write-path |
+| L0a | Resolved path (`docs/helm.contract` → `PRD.md` / `spec.md` / `helm-spec.md` / …) | Thin living product contract (what / not / accept) — single product write-path |
 | L0b | code + tests / verify | Technical authority |
 | L1 | optional `docs/helm-now.md` | Active-slice working memory; discard on premise change |
 | L2 | chat / `_scratch` | Disposable; never a second authority |
 
-Poteto **pstack** is not PRD-centric ("best spec is code"). helm keeps a **thin** product contract because commanders need a durable write-path without a document pyramid. That is not an enterprise PRD stack and not a second architecture bible.
+### Already have a PRD or spec?
+
+Yes — compatible. `/helm-mode` boot should **adopt** that file (features + 验收/AC), pin `docs/helm.contract`, and **not** demand a new `helm-spec.md`. See `skills/helm-mode/references/living-contract.md`.
+
+Poteto **pstack** is not PRD-centric ("best spec is code"). helm keeps a **thin** product write-path — which may literally be your existing PRD/spec file.
 
 ## Heritage vs poteto pstack
 

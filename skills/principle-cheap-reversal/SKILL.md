@@ -12,7 +12,7 @@ metadata:
 Premise failure is not fixed by synchronizing ten documents.
 
 1. Revert the bad slice to a baseline
-2. Rewrite `docs/helm-spec.md` (L0a)
+2. Rewrite the resolved L0a (PRD or helm-spec)
 3. Delete or fully rewrite `docs/helm-now.md` (L1); ignore L2 scratch
 4. Fresh thread with L0a + current goal
 5. Rebuild

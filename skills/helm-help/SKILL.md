@@ -22,6 +22,7 @@ For almost all real work: use **`/helm-mode`** and describe the goal + done chec
 |---|---|
 | Start anything non-trivial | `/helm-mode` + goal + stack + done check |
 | Only clarify requirements | `/helm-mode` + "spec only" |
+| Already have PRD/spec, helm asks for helm-spec | Pin `docs/helm.contract` → that file; or say “L0a is docs/PRD.md — do not create helm-spec” |
 | Something broken in the product flow | `/helm-mode` + "fix outcome" + what they clicked |
 | Direction changed / earlier idea wrong | `/helm-mode` + "change direction" or "recover" |
 | Just check if it works | `/helm-mode` + "verify only" |

@@ -21,11 +21,11 @@
 
 - Install the `skills/` directories with the host's skills installer.
 - If subagents/multi-model are unavailable: simulate shape/critique/dual-try as sequential **blind** passes with an explicit rubric; label Handled by models as "single-model degraded."
-- Always write `docs/helm-spec.md` so sessions are portable across hosts.
+- Resolve L0a via `living-contract.md`; pin with `docs/helm.contract` when adopting a PRD so Codex sessions stay portable.
 
 ## Shared invariants
 
-1. Product write-path: `docs/helm-spec.md` (optional L1: `docs/helm-now.md`)
+1. Product write-path: one resolved L0a (optional pointer `docs/helm.contract`; optional L1 `docs/helm-now.md`)
 2. Max 3 **human** questions per ask, A/B + recommendation
 3. Technical uncertainty → model gate, never human interview
 4. No success claim without verify-outcome evidence (or honest BLOCKED + click path)

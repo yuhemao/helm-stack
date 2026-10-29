@@ -22,7 +22,7 @@ A valid slice:
 
 ## Output
 
-Write a short ordered list into the chat (and optionally a short `## Delivery slices` section in `docs/helm-spec.md` — not a second authority file):
+Write a short ordered list into the chat (and optionally a short `## Delivery slices` section in the resolved L0a — not a second authority file):
 
 ```text
 Slice 1: <outcome> — AC…

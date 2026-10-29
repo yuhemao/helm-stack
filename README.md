@@ -38,7 +38,7 @@ You usually do **not** need to memorize the rest. `helm-mode` routes to them.
 
 ## What this optimizes for
 
-- **Thin product authority** (`docs/helm-spec.md`) — living product contract (PRD *core*: what / not / accept), not a document pyramid
+- **Thin product authority** — one living contract; **compatible with existing `PRD.md` / `spec.md` / `helm-spec.md`** (auto-adopt + pin `docs/helm.contract`). Never maintain two copies
 - **Optional working memory** (`docs/helm-now.md`) — active slice only; discarded on premise change
 - **Decision budget**: human gates vs **model gates** vs act — never interview you about libraries
 - **Quality loop**: shape → build → **eng-critique** → product-critique → verify
@@ -94,7 +94,7 @@ You (product / UX / acceptance)
 
 | Layer | Meaning |
 |---|---|
-| L0a `docs/helm-spec.md` | Single product write-path |
+| L0a (PRD or `helm-spec`, via `docs/helm.contract`) | Single product write-path |
 | L0b code + checks | Technical authority |
 | L1 `docs/helm-now.md` | Optional disposable working memory |
 | L2 scratch | Never authority |

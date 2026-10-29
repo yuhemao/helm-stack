@@ -13,7 +13,7 @@ Implement **only** the current slice. Prefer the `builder` model role when confi
 
 ## Rules
 
-1. Read `docs/helm-spec.md` and the active slice ACs (and `docs/helm-now.md` if present).
+1. Resolve L0a (`living-contract.md`); read it and the active slice ACs (and `docs/helm-now.md` if present).
 2. Stay inside **stack constraints**.
 3. Non-trivial slice → ensure **`shape-before-code`** already ran (or run it now). Trivial → `skip` with reason.
 4. Apply **decision-budget**: no plumbing questions to the human; uncertain tech → model gate.

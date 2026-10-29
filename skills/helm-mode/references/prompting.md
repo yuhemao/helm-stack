@@ -14,6 +14,12 @@ Done when: I can paste a URL, get a short link, open it, and see it redirect.
 ```
 
 ```text
+/helm-mode
+L0a is our existing docs/PRD.md (features + 验收). Do not create docs/helm-spec.md.
+Pin docs/helm.contract if missing. Continue from current slice.
+```
+
+```text
 /helm-mode change direction
 We are dropping public signup. Living contract should be invite-only admin.
 Recover cheaply if needed. Then rebuild the auth slice only.
@@ -21,7 +27,7 @@ Recover cheaply if needed. Then rebuild the auth slice only.
 
 ```text
 /helm-mode verify only
-Walk the acceptance checklist in docs/helm-spec.md.
+Walk the acceptance checklist in the living contract (PRD or helm-spec).
 Report pass/fail in plain language. Do not add features.
 ```
 
@@ -34,7 +40,7 @@ Prefer a different model for eng-critic than builder when available.
 
 - `apply decision-budget` — stop asking technical questions; use model gates
 - `apply model-not-human-for-tech` — route this fork to eng-critique / dual-try
-- `apply one-source-of-truth` / `apply thin-authority` — merge into docs/helm-spec.md; discard extra authorities
+- `apply one-source-of-truth` / `apply thin-authority` — one L0a only; pin with docs/helm.contract; never PRD+helm-spec duplicates
 - `apply cheap-reversal` — revert this slice; rewrite L0a; fresh thread
 - `apply observable-acceptance` — rewrite ACs as clickable checks
 - `apply token-for-proof` — spend tokens on critique/verify, not more planning

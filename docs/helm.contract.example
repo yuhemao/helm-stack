@@ -1,0 +1,6 @@
+# Example: commit as docs/helm.contract in the consumer project.
+# First non-comment line = L0a path (repo-relative).
+# Compatible: PRD, spec, or helm-spec — pick ONE.
+docs/PRD.md
+# docs/spec.md
+# docs/helm-spec.md

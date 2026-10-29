@@ -6,9 +6,10 @@ Use these terms in the living contract, questions, and agent-to-agent briefs. Th
 
 | Term | Meaning | Prefer over |
 |---|---|---|
-| **Living product contract** / **Living spec** | Thin L0a file (`docs/helm-spec.md`): goal, non-goals, P0, observable ACs | "PRD folder", "full PRD", "docs" |
-| **Thin PRD core** | Same idea: the useful core of a PRD (what/not/accept), not an enterprise PRD stack | ChatPRD / multi-doc PRD rituals |
-| **Source of truth (product)** | L0a wins when chat and files disagree on product | "what we said earlier" |
+| **Living product contract** / **Living spec** / **L0a** | One resolved product authority file (may be `docs/PRD.md` or `docs/helm-spec.md`): goal, non-goals, P0, observable ACs | "must be named helm-spec", "PRD folder as many authorities" |
+| **helm.contract** | Tiny pointer file naming the L0a path | Duplicating PRD into helm-spec |
+| **Thin PRD core** | Useful core of a PRD (what/not/accept); an existing PRD can *be* L0a | ChatPRD / multi-doc PRD rituals + a second copy |
+| **Source of truth (product)** | Resolved L0a wins when chat and files disagree on product | "what we said earlier" |
 | **Technical authority (L0b)** | Code + runnable checks | Parallel `architecture.md` as truth |
 | **Working memory (L1)** | Optional `docs/helm-now.md` for active slice only | Second product bible |
 | **Disposable (L2)** | Scratch plans, bakeoffs, chat essays — not authority | Syncing scratch into SoT |

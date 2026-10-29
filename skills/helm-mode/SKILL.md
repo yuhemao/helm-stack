@@ -5,7 +5,7 @@ license: MIT
 disable-model-invocation: true
 metadata:
   author: helm-stack
-  version: "1.1.0"
+  version: "1.1.2"
   audience: non-programmer-commander
 ---
 
@@ -17,9 +17,16 @@ This pack is for operators who steer **outcomes**. They may not read diffs. Trea
 
 **Design intent:** keep quality-raising practices; move technical judgment from human experts to **stronger / independent models**. Humans keep requirements, UX/visual taste, and final acceptance.
 
+## Boot (before any playbook step)
+
+1. Read [`references/living-contract.md`](references/living-contract.md) and **resolve L0a**.
+2. Existing **PRD** or **spec** with features + acceptance/验收 **counts** — adopt it; pin `docs/helm.contract` if missing.
+3. Report `L0a: <path>` once. **Do not** say "missing spec/helm-spec" when a strong PRD/spec exists.
+4. Then match a playbook and open its steps.
+
 ## Non-negotiables
 
-1. **Thin product authority.** Persist product truth in `docs/helm-spec.md` (L0a — a thin living product contract, not a document pyramid). Optional `docs/helm-now.md` (L1) for the active slice only. Technical truth lives in code + runnable checks (L0b). No parallel architecture/task pyramids as second authorities. See **one-source-of-truth**.
+1. **Thin product authority.** Persist product truth in **one** L0a living contract (resolve path per [`references/living-contract.md`](references/living-contract.md)). Compatible with existing `PRD.md` / `spec.md` / `helm-spec.md` — filename does not matter. Optional `docs/helm-now.md` (L1). Technical truth in code + runnable checks (L0b). **Never** duplicate PRD↔spec as two authorities. See **one-source-of-truth**.
 2. **Decision budget (three tiers).** **Human gate:** product scope, conflicting user-visible/UX choices, money/identity/legal/irreversible. **Model gate:** technical judgment → stronger/independent models (`shape-before-code`, `eng-critique`, eng `dual-try`). **Act:** reversible plumbing with evidence. Max **3** human questions per ask, each **A/B + recommendation**. Never ask a question another model would answer better (**model-not-human-for-tech**).
 3. **Observable acceptance.** "Done" means a human (or scripted driver) can exercise a checklist. Compiles / "looks good" is not done. Use **verify-outcome** before claiming success.
 4. **Vertical slices.** Thin end-to-end increments; each ends in acceptance the operator can judge without reading code.
@@ -118,6 +125,6 @@ No long implementation tours. No asking them to read diffs.
 - **Subagents / models:** use separate agents or stronger models for `shape-before-code`, `eng-critique`, `product-critique`, and eng `dual-try` when available. Read `/setup-helm` or the host's helm model rule if present. If only one model exists: blind second pass with rubric; say so under Handled by models.
 - **Questions:** structured question tool when present; else numbered A/B in chat.
 - **Verification:** run the app / tests / browser tools when possible; otherwise honest BLOCKED + click path.
-- **Persistence:** `docs/helm-spec.md` in the repo so new sessions reload product truth without the old chat.
+- **Persistence:** resolve and keep one L0a path (`docs/helm.contract` recommended). Do not claim "missing spec" when a PRD with acceptance already exists — adopt it. Never duplicate PRD into a second helm-spec body.
 
-More: [`references/harness.md`](references/harness.md), [`references/prompting.md`](references/prompting.md), [`references/terminology.md`](references/terminology.md), [`references/eng-principles.md`](references/eng-principles.md).
+More: [`references/living-contract.md`](references/living-contract.md), [`references/harness.md`](references/harness.md), [`references/prompting.md`](references/prompting.md), [`references/terminology.md`](references/terminology.md), [`references/eng-principles.md`](references/eng-principles.md).

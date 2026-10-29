@@ -4,7 +4,7 @@ description: "Adversarial product review against the living product contract: mi
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.1.0"
+  version: "1.1.2"
 ---
 
 # Product critique
@@ -15,7 +15,9 @@ Review like a skeptical product editor. Prefer the `product-critic` role when co
 
 ## Blindness
 
-If a second agent/model is available, give it: living contract + claimed user-visible changes + verify report. Do **not** give the builder's self-justification essay.
+Resolve L0a first (`living-contract.md`) — an adopted PRD/spec is valid.
+
+If a second agent/model is available, give it: that living contract + claimed user-visible changes + verify report. Do **not** give the builder's self-justification essay.
 
 If only one agent exists: fresh critique section that may only quote the contract and observable behaviors.
 

@@ -17,7 +17,7 @@ Apply a **scope hammer**. Fixed appetite; variable scope.
 2. Force-rank into **P0 / P1 / P2**.
 3. Move anything not required to prove the core job into **non-goals** for this version.
 4. Check P0 can be verified with a short click path.
-5. Patch `docs/helm-spec.md` — do not create `scope-v2.md`.
+5. Patch the resolved L0a — do not create `scope-v2.md` or a second helm-spec copy of a PRD.
 
 ## Heuristic
 

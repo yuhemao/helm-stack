@@ -16,7 +16,7 @@ metadata:
 1. **Name the premise failure** in one plain paragraph.
 2. **Find a baseline** — last known-good git commit or last state that still matched a correct AC.
 3. **Revert the bad slice** (git revert/reset as the host safely allows; never destroy unrecoverable production data).
-4. **Rewrite L0a** — `docs/helm-spec.md` matches what you still want.
+4. **Rewrite L0a** — the resolved living contract (PRD or helm-spec per `living-contract.md`) matches what you still want.
 5. **Discard working memory** — delete or fully rewrite `docs/helm-now.md`; deprecate/delete disposable L2 plans that encoded the wrong premise. Do **not** spend hours syncing a pyramid.
 6. **Invalidate context** — recommend a **fresh thread** with only the living contract + current goal.
 7. **`plain-status`** — what was discarded, what remains true, next playbook.

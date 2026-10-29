@@ -13,7 +13,7 @@ You are the **verifier / oracle**, not the cheerleader. Prefer the `verifier` mo
 
 ## Steps
 
-1. Load ACs from `docs/helm-spec.md` (or the slice list).
+1. Resolve L0a per `helm-mode/references/living-contract.md`. Load ACs from that file (or the slice list). Do not fail with "missing helm-spec" if a PRD/contract with ACs exists.
 2. Run the app the way a user would (dev server, browser tools, API calls, automated tests — whatever the harness allows). Include a short **regression smoke** of prior P0 happy path when touching an existing app.
 3. For each AC: **PASS** / **FAIL** / **BLOCKED** (environment cannot run), with evidence labeled measured/inferred/guess.
 4. On FAIL: exact repro steps and observed vs expected. Hand back to build + eng-critique — do not ask the operator for technical diagnosis.

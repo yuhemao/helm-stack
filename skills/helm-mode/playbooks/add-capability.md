@@ -5,7 +5,7 @@ For new user-visible behavior on an existing app.
 ## Steps
 
 1. **Restate** — What capability, for whom, why now. Run `restatement` if ambiguous.
-2. **Update truth** — Patch `docs/helm-spec.md` only (new ACs + non-goals). No second L0a doc. Refresh or clear `docs/helm-now.md` as needed.
+2. **Update truth** — Patch the **resolved L0a** only (new ACs + non-goals). No second L0a / no PRD↔helm-spec duplicate. Refresh or clear `docs/helm-now.md` as needed.
 3. **Slice** — One vertical slice that demos the capability end-to-end.
 4. **Shape** — `shape-before-code` (skip only if trivial with reason).
 5. **Build** — `build-outcome` for that slice.
