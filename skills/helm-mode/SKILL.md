@@ -23,12 +23,12 @@ This pack is for operators who steer **outcomes**. They may not read diffs. Trea
 2. Existing **PRD** or **spec** with features + acceptance/验收 **counts** — adopt it; pin `docs/helm.contract` if missing.
 3. Report `L0a: <path>` once. **Do not** say "missing spec/helm-spec" when a strong PRD/spec exists.
 4. Then match a playbook and open its steps.
-5. **Per slice, before build:** pick the risk tier (with its trigger), run the AC review, freeze ACs + envelope smokes, and write the **slice card** — see [`references/acceptance-gate.md`](references/acceptance-gate.md).
+5. **Per slice, before build:** pick the provisional risk tier (with its trigger), run the AC review, re-check the tier once, freeze ACs + envelope smokes, and write the **slice card** — see [`references/acceptance-gate.md`](references/acceptance-gate.md).
 
 ## Non-negotiables
 
 1. **Thin product authority.** Persist product truth in **one** L0a living contract (resolve path per [`references/living-contract.md`](references/living-contract.md)). Compatible with existing `PRD.md` / `spec.md` / `helm-spec.md` — filename does not matter. Optional `docs/helm-now.md` (L1). Technical truth in code + runnable checks (L0b). **Never** duplicate PRD↔spec as two authorities. See **one-source-of-truth**.
-2. **Decision budget (three tiers).** **Human gate:** product scope, conflicting user-visible/UX choices, money/identity/legal/irreversible. **Model gate:** technical judgment → stronger/independent models (`shape-before-code`, `eng-critique`, eng `dual-try`). **Act:** reversible plumbing with evidence. Max **3** human questions per ask, each **A/B + recommendation**. Never ask a question another model would answer better (**model-not-human-for-tech**).
+2. **Decision budget (three tiers).** **Human gate:** product scope, conflicting user-visible/UX choices, money/identity/legal/irreversible. **Model gate:** technical judgment → stronger/independent models (`shaper` role / `shape-before-code`, eng `dual-try`, a blind comparison in the parent; `eng-critique` only inside a collect round). **Act:** reversible plumbing with evidence. Max **3** human questions per ask, each **A/B + recommendation**. Never ask a question another model would answer better (**model-not-human-for-tech**).
 3. **Observable acceptance.** "Done" means a human (or scripted driver) can exercise a checklist. Compiles / "looks good" is not done. Use **verify-outcome** before claiming success.
 4. **Vertical slices.** Thin end-to-end increments; each ends in acceptance the operator can judge without reading code.
 5. **Cheap reversal.** Premise wrong → **recover-wrong-turn**: revert slice, rewrite L0a, discard L1/L2, fresh thread. Do not sync ten docs.
@@ -107,22 +107,16 @@ If nothing fits, design a **short** bespoke playbook (max 10 steps) that still e
 ## Default quality loop (every slice; tier sets the weight)
 
 ```text
-tier + AC review (product-critique) → freeze (slice card)
+tier + AC review (product-critique) → re-check tier → freeze (slice card)
 → [shape-before-code] → build-outcome
-→ collect round: verify-outcome ∥ eng-critique   (same snapshot; no edits in between)
-→ parent triage (Must admission) → one fix batch → narrow re-verify
-→ PASS | STOP: budget | STOP: no-progress → plain-status
+→ collect round: verify-outcome, then eng-critique   (same snapshot; no edits in between)
+→ parent triage (Must admission) → checkpoint → one fix batch → narrow re-verify
+→ PASS | STOP: budget | STOP: no-progress | PENDING-HUMAN → plain-status
 ```
 
-| Tier | Runs | Independent agents | Fix rounds |
-|---|---|---|---|
-| `simple` | inline AC check → build → verify (parent thread) | 0 | 1 |
-| `standard` | AC review → [shape] → build → verify ∥ eng-critique (first round only) | ≤2 per slice | 2 |
-| `high` | AC review → shape → build → verify ∥ eng-critique; eng re-review only of fix diffs touching hard-risk code | ≤2 per round, ≤5 per slice | 2 |
+**Read [`references/acceptance-gate.md`](references/acceptance-gate.md) before the first slice.** It is the only place that defines tier triggers, what each tier runs, agent caps, fix-round budgets, Must admission, re-verify scope, exit states, stop options and the carry-over rule. Do not restate its numbers from memory. `high` must name its trigger. Skipping a step the tier requires needs `skip: <reason>`.
 
-Tier triggers, slice card, Must admission, re-verify scope and stop options: [`references/acceptance-gate.md`](references/acceptance-gate.md). `high` must name its trigger. Skipping a step the tier requires needs `skip: <reason>`.
-
-**Parent is the only dispatcher.** Subagents report findings; they do not spawn agents or fix code (except the builder executing the Must batch it was handed). Never one agent per FAIL. Never another round past budget without the operator choosing it.
+**Parent is the only dispatcher.** Subagents report findings; they do not spawn agents or fix code (except the builder executing the Must batch it was handed). Never one agent or one playbook run per FAIL. Never another round past budget, and never a re-slice of a stopped behavior, without the operator choosing it.
 
 ## Reply shape
 
@@ -138,7 +132,7 @@ No long implementation tours. No asking them to read diffs.
 
 ## Harness notes
 
-- **Subagents / models:** spawn independent agents **only as the slice tier allows** (`simple` 0, `standard` ≤2, `high` ≤2 per round). `/setup-helm` roles choose *which model* does a job; they are not a mandate to spawn. No nested fleets. If only one model exists: blind second pass with rubric inside the same budget; say so under Handled by models.
+- **Subagents / models:** spawn independent agents **only within the slice tier's cap** (acceptance-gate §2). `/setup-helm` roles choose *which model* does a job; they are not a mandate to spawn. No nested fleets. If only one model exists: blind second pass with rubric inside the same budget; say so under Handled by models.
 - **Questions:** structured question tool when present; else numbered A/B in chat.
 - **Verification:** run the app / tests / browser tools when possible; otherwise honest BLOCKED + click path.
 - **Persistence:** resolve and keep one L0a path (`docs/helm.contract` recommended). Do not claim "missing spec" when a PRD with acceptance already exists — adopt it. Never duplicate PRD into a second helm-spec body.

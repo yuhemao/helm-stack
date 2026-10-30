@@ -4,13 +4,15 @@ Synced from: docs/helm-spec.md
 
 ## Slice card
 Slice: P0 create short link + redirect
-Tier: standard — trigger: new `links` table
+Tier: standard — trigger: new `links` table (additive)
 Frozen AC (at build start): AC1 create link, AC2 redirect works
 Envelope smokes (≤3): S1 home page loads
 Fix rounds: 0/2
+Checkpoint: (set before each fix batch)
 Deferred:
 - [product] custom code length → next-slice candidate
 - [eng/should] index on links.code
+Stopped behaviors: none
 
 Eng decisions this slice:
 - Store codes in Supabase table `links` with unique code

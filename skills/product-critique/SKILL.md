@@ -13,15 +13,9 @@ Review like a skeptical product editor — **before build**, once per slice. Its
 
 **Not** a substitute for `eng-critique`. Do not dump line-by-line code review on the operator.
 
-## When it runs (by tier)
+## When it runs
 
-| Tier | Runs |
-|---|---|
-| `simple` | 1–2 line inline check by the parent |
-| `standard` | Once, parent thread or one agent |
-| `high` | Once, independent (prefer `product-critic` role) |
-
-After this review the parent **freezes** the ACs in the slice card. Product-critique does **not** run again on the slice.
+Once per slice, before build; how heavy (inline / parent / independent) is set by the tier — acceptance-gate §2. After this review the parent re-checks the tier once, then **freezes** the ACs in the slice card. Product-critique does **not** run again on the slice, except an inline re-review of rewritten AC lines on unfreeze (acceptance-gate §4).
 
 ## Inputs
 
@@ -47,6 +41,6 @@ Resolve L0a first (`living-contract.md`) — an adopted PRD/spec is valid. Give 
 New product observations (from verify, from the operator watching, from anyone) go to the slice card **`Deferred`**, not to this slice's Musts. Exceptions:
 
 - A **hard-risk** finding (security / authz, data loss, secret leak, irreversible) may enter as a Must after freeze.
-- An AC proven unreachable or contradictory → `change-direction` or a human gate, not a new Must.
+- An AC proven unreachable or contradictory → unfreeze per acceptance-gate §4 (human gate or `change-direction`), not a new Must.
 
 Do not auto-expand scope while fixing unless the operator lifts non-goals.

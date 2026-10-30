@@ -13,16 +13,17 @@ Implement **only** the current slice. Prefer the `builder` model role when confi
 
 ## Build mode (first build of the slice)
 
-1. Resolve L0a (`living-contract.md`); read it and the **slice card** (tier, frozen ACs, envelope smokes) in `docs/helm-now.md` or the todo list. No card on a `standard`/`high` slice → ask the parent to write one first.
+1. Resolve L0a (`living-contract.md`); read it and the **slice card** (tier, frozen ACs, envelope smokes) (pasted in your brief, or `docs/helm-now.md`). No card on a `standard`/`high` slice → ask the parent to write one first.
 2. Stay inside **stack constraints**.
-3. `shape-before-code` per tier: `high` yes; `standard` when crossing boundaries or inventing shape; `simple` skip.
+3. `shape-before-code` as the tier says (acceptance-gate §2).
 4. Apply **decision-budget**: no plumbing questions to the human; uncertain tech → model gate.
 5. Smallest change that makes the frozen ACs reachable. Prefer behavior-level checks when cheap. A quick self-check is fine; it is not acceptance.
 6. Git checkpoint when the host allows before risky rewrites.
-7. When ready: hand the snapshot back to the parent for the **collect round** (`verify-outcome` ∥ `eng-critique`). Do not self-declare done. Do not call critics yourself.
+7. When ready: hand the snapshot back to the parent for the **collect round** (`verify-outcome`, then `eng-critique` per tier). Do not self-declare done. Do not call critics yourself.
 
 ## Fix mode (after parent triage)
 
+- The parent has made a **checkpoint** (git commit) before the batch; if not, make one first and report its id.
 - Input is **one Must batch** from the parent: each item has a repro or failure scenario + expected behavior. Optional small Shoulds may be folded in only if the parent listed them.
 - Fix **all** items in this one pass. Do not pull a critique per item; do not start extra review rounds.
 - No drive-by features, no work on `Deferred` items.
@@ -30,7 +31,7 @@ Implement **only** the current slice. Prefer the `builder` model role when confi
 
 ## Tier upgrade
 
-If building reveals a `high` trigger (e.g. a migration, an authz check), stop and tell the parent which trigger. The parent upgrades the tier; used fix rounds are not reset.
+If building reveals a `high` trigger (e.g. a destructive data migration, an authz check — see acceptance-gate §2), stop and tell the parent which trigger. The parent upgrades the tier; used fix rounds are not reset.
 
 ## Reporting
 

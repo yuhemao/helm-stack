@@ -41,7 +41,7 @@ You usually do **not** need to memorize the rest. `helm-mode` routes to them.
 - **Thin product authority** — one living contract; **compatible with existing `PRD.md` / `spec.md` / `helm-spec.md`** (auto-adopt + pin `docs/helm.contract`). Never maintain two copies
 - **Optional working memory** (`docs/helm-now.md`) — active slice only; discarded on premise change
 - **Decision budget**: human gates vs **model gates** vs act — never interview you about libraries
-- **Bounded quality loop** (1.2): risk tier → AC review + **freeze** → [shape] → build → **verify ∥ eng-critique** on one snapshot → one fix batch → narrow re-verify → stop at budget (`simple` 1 / `standard` 2 / `high` 2 rounds) or on no progress
+- **Bounded quality loop** (1.2): risk tier → AC review + **freeze** → [shape] → build → **verify, then eng-critique** on one snapshot → one fix batch → narrow re-verify → stop at a small per-tier budget or on no progress (`skills/helm-mode/references/acceptance-gate.md`)
 - **Observable acceptance**: done means you can click a checklist
 - **Cheap reversal**: rewrite L0a + discard L1/L2 + fresh thread — do not sync ten docs
 - **Tokens for first-round proof**: one strong verify + one bounded critique — not more planning prose, not endless fix→verify loops
@@ -87,7 +87,7 @@ You (product / UX / acceptance)
         → vertical-slice
         → tier + product-critique (AC review) → freeze (slice card)
         → [shape-before-code] → build-outcome
-        → collect: verify-outcome ∥ eng-critique  → triage → one fix batch → re-verify
+        → collect: verify-outcome, then eng-critique → triage → one fix batch → re-verify
               (≤ budget; stop on no progress)
         → plain-status → you click / pick a stop option when needed
         → next slice  |  recover-wrong-turn if the premise was wrong

@@ -31,7 +31,7 @@ For almost all real work: use **`/helm-mode`** and describe the goal + done chec
 | Stop being asked jargon questions | Steer: `apply decision-budget` / `apply model-not-human-for-tech` |
 | Docs/chat became a swamp | `/helm-mode` recover |
 | Endless fix → re-check cycles, too many agents for a small change | Steer: `apply bounded-loop` (or `simple change` for tiny edits) |
-| A slice stopped and offers A/B/C/D | Pick one; A (accept + defer) is usually right |
+| A slice stopped and offers options | Pick one; the reply marks a recommendation (A accept + defer, unless it is a security / data-loss item) |
 
 Read [`../helm-mode/SKILL.md`](../helm-mode/SKILL.md) and [`../helm-mode/references/prompting.md`](../helm-mode/references/prompting.md) before quoting details.
 

@@ -30,7 +30,7 @@ Write helm's model settings, one model (or alias) per role. This is how **model 
 
 Valid aliases: `inherit-parent`, `auto` (run on the parent chat model).
 
-**Role ≠ agent.** A role says *which model* does that job when it runs. It does **not** mean every role gets its own subagent on every slice. How many independent agents a slice may spawn is set by its risk tier (`simple` 0, `standard` ≤2, `high` ≤2 per collect round) — see `helm-mode/references/acceptance-gate.md`. When a tier keeps a job in the parent thread, the parent simply runs that pass itself.
+**Role ≠ agent.** A role says *which model* does that job when it runs. It does **not** mean every role gets its own subagent on every slice. How many independent agents a slice may spawn is set by its risk tier — see `helm-mode/references/acceptance-gate.md` §2. When a tier keeps a job in the parent thread, the parent simply runs that pass itself.
 
 ## Steps
 

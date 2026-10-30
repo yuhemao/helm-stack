@@ -15,12 +15,12 @@ Extra inference budget buys **first-round, high-signal oracles**, not longer doc
 2. **`shape-before-code`** — settle structure when the tier calls for it
 3. **`verify-outcome`** — measured proof; the primary oracle
 4. **`eng-critique`** — one bounded independent review on the same snapshot as verify
-5. **`dual-try`** — bakeoff with shared ACs, `standard`/`high` only
+5. **`dual-try`** — bakeoff with shared ACs, when the tier allows
 
 Do **not** spend that budget on:
 
 - clarifying interviews the operator cannot answer, or document pyramids
-- fix→verify rounds past the slice budget (`simple` 1, `standard` 2, `high` 2)
+- fix→verify rounds past the slice budget (acceptance-gate §2), or re-slicing a stopped behavior for a fresh budget
 - re-running critique after each small fix, or one agent per finding
 - full-P0 regression after every change
 

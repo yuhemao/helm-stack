@@ -39,13 +39,13 @@ Prefer a different model for eng-critic than builder when available.
 ## Steers mid-flight (one liners)
 
 - `apply decision-budget` — stop asking technical questions; use model gates
-- `apply model-not-human-for-tech` — route this fork to eng-critique / dual-try
+- `apply model-not-human-for-tech` — route this fork to a stronger model in the parent or an eng dual-try
 - `apply one-source-of-truth` / `apply thin-authority` — one L0a only; pin with docs/helm.contract; never PRD+helm-spec duplicates
 - `apply cheap-reversal` — revert this slice; rewrite L0a; fresh thread
 - `apply observable-acceptance` — rewrite ACs as clickable checks
 - `apply token-for-proof` — spend tokens on one strong round of verify/critique, not more planning or more rounds
-- `apply bounded-loop` — tier the slice (say the trigger), freeze ACs + ≤3 smokes, collect verify + eng findings before fixing, Musts need AC evidence or a hard-risk scenario, max 2 fix rounds, stop on no progress
-- `simple change` — treat as `simple` tier: parent thread only, build → verify, 1 fix round
+- `apply bounded-loop` — tier the slice (say the trigger), freeze ACs + envelope, collect verify + eng findings before fixing, Musts need AC evidence or a hard-risk scenario, stay inside the fix-round budget, stop on no progress (`acceptance-gate.md`)
+- `simple change` — request the `simple` tier (parent thread only); high triggers still apply, and the agent says so if one overrides the request
 - `plain-status` — Waiting on you vs Handled by models
 - `dual-try this slice` — two short attempts; say ux-fork or eng-fork
 - `new task` — stop continuing the previous playbook

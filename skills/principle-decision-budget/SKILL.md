@@ -25,7 +25,7 @@ Max **3** questions per ask, each **A/B + recommendation**. Never invent shortha
 
 Technical forks the operator cannot judge better than a strong model: library choice inside the named stack, data shape, error handling, security posture, maintainability, which of two implementations is sounder.
 
-Use `eng-critique`, `shape-before-code`, or `dual-try` (eng-fork). Prefer a different model or a blind fresh pass.
+Decide in the parent with a stronger model role (`shaper` / `shape-before-code`), a blind fresh pass, or a short eng `dual-try`. `eng-critique` runs only inside a collect round on a build snapshot (`helm-mode/references/acceptance-gate.md`) — do not invoke it as a generic model gate.
 
 ## 3. Act
 

@@ -11,19 +11,15 @@ metadata:
 
 For non-trivial slices, **name the shape before writing feature logic**.
 
-## When (by tier)
+## When
 
-| Tier | Shape |
-|---|---|
-| `simple` | skip |
-| `standard` | when the slice crosses modules or invents structure; the parent thread may do it |
-| `high` | yes; independent `shaper` preferred |
+As the slice tier says — acceptance-gate §2 (`simple` skips; `standard` when crossing boundaries or inventing shape; `high` always).
 
 ## Do
 
 1. Resolve L0a (`living-contract.md`); read ACs for this slice (and `docs/helm-now.md` if present).
 2. State in short form: entities / states, boundaries (API, DB, auth), what is illegal, what is trusted inside.
-3. If two shapes are plausible and costly to reverse: run a **short** eng dual sketch (same shared ACs) and pick via model judgment or `eng-critique` — **do not ask the operator**.
+3. If two shapes are plausible and costly to reverse: run a **short** eng dual sketch (same shared ACs) and pick via the `shaper` role or a short blind comparison in the parent — **do not ask the operator**, and do not call `eng-critique` (it runs only on a build snapshot).
 4. Optionally write 3–5 one-liners into `docs/helm-now.md` under eng decisions. Do not open `architecture.md`.
 
 ## Do not

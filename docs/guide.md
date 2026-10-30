@@ -59,7 +59,7 @@ Buy **one strong first round** of oracles: AC review before build, one measured 
 
 ## Acceptance gate (1.2)
 
-Each slice gets a **risk tier** (`simple` / `standard` / `high`, by named triggers). ACs **freeze** when building starts. Verify and engineering review look at the **same** build; all must-fixes go into **one** fix batch; re-verify checks only what changed. Budget: `simple` 1 fix round, `standard`/`high` 2. Same failure twice, or something that worked breaks → stop. When a slice stops you get four plain options (accept and defer / one more round / change the requirement / rethink). Details: `skills/helm-mode/references/acceptance-gate.md`.
+Each slice gets a **risk tier** (`simple` / `standard` / `high`, by named triggers). ACs **freeze** when building starts. Verify and engineering review look at the **same** build; all must-fixes go into **one** fix batch; re-verify checks only what changed. Each tier has a small fix-round budget. If a fix round makes no progress, or something that worked breaks (then the last fix is rolled back), it stops early. When a slice stops you get plain options with a recommendation (accept and defer / switch off a risky part / one more round / change the requirement / rethink). A stopped problem is not quietly retried as a "new slice" while you are away. Details: `skills/helm-mode/references/acceptance-gate.md`.
 
 Steer: `apply bounded-loop. tier this slice and say the trigger.`
 

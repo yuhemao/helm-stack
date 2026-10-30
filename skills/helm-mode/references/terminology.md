@@ -46,16 +46,18 @@ Use these terms in the living contract, questions, and agent-to-agent briefs. Th
 | **Bounded loop** | Acceptance as a gate with tier, freeze, batch, envelope, budget and stop states | "keep fixing until it's perfect" |
 | **Risk tier** | `simple` / `standard` / `high`, chosen by named triggers; sets agents, critique and budget | "non-trivial" by gut feel |
 | **Trigger** | The named condition that put a slice in its tier (e.g. "schema migration") | "seems risky" |
-| **Slice card** | Top of `helm-now.md`: tier, frozen ACs, envelope, fix rounds, Deferred | scattered notes |
+| **Slice card** | Top of `docs/helm-now.md`: tier, frozen ACs, envelope, fix rounds, checkpoint, Deferred, stopped behaviors; pasted into every subagent brief | scattered notes |
 | **AC freeze** | Slice ACs fixed at build start; only hard-risk findings may add Musts | moving the target during verify |
-| **Regression envelope** | ≤3 named adjacent smokes verified with the slice | full P0 after every edit |
+| **Regression envelope** | ≤3 named adjacent smokes, run in every collect round and re-verify | full P0 after every edit |
 | **Collect round** | verify + eng-critique on one snapshot, no edits in between | fix-as-you-find |
 | **Must admission** | A Must needs a frozen-AC violation with evidence, or a hard-risk scenario | critic opinion as blocker |
 | **Hard risk** | security / authz, data loss, secret leak, irreversible damage | "could be a problem" |
 | **Fix batch** | All admitted Musts handed to one build | one agent per finding |
-| **Fix round** | One fix batch + narrow re-verify; budget `simple` 1, `standard`/`high` 2 | "as needed" |
-| **No-progress stop** | Same FAIL persists or a PASS flips to FAIL → stop now | burning the rest of the budget |
-| **Stop options** | A accept + defer / B one more round / C change AC / D change direction | technical dump on the operator |
+| **Fix round** | One issued fix batch + its narrow re-verify; budget per tier in `acceptance-gate.md` §2 | "as needed" |
+| **Progress / no-progress** | Progress = a batch item went FAIL→PASS and nothing went PASS→FAIL; otherwise stop now (oscillation → revert to checkpoint) | burning the rest of the budget |
+| **Stop options** | A accept + defer / A′ switch off the risky part / B one more round / C change AC / D rethink | technical dump on the operator |
+| **Carry-over rule** | A stopped behavior is not re-sliced for a fresh budget without the operator | "new slice, new budget" |
+| **Checkpoint (fix)** | Commit made before each fix batch; revert target on oscillation | fixing forward on a broken state |
 | **Deferred** | Findings moved out of the slice; product ones promoted once to L0a | losing findings / re-reviewing them |
 | **AC-defect** | AC unreachable or contradictory; routes to change-direction, not a FAIL | fixing code toward an impossible AC |
 

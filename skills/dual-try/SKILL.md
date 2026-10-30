@@ -18,10 +18,7 @@ Lightweight bakeoff — not two permanent products. Classify the fork first:
 
 ## Budget (bounded-loop)
 
-- Only on `standard` or `high` slices. A `simple` change does not get a bakeoff.
-- Each attempt: **one** `verify-outcome`, **no** fix rounds.
-- Eng-fork: **one** shared `eng-critique` across both attempts — not one per attempt.
-- The keeper then runs a normal collect round with the full fix-round budget.
+Rules and agent counting: acceptance-gate §9. In short: `standard`/`high` only; one verify per attempt, no fix rounds; one shared eng-critique across both attempts; the keeper's next collect round is verify-only if that shared review covered the keeper's code.
 
 ## Steps
 
