@@ -28,8 +28,8 @@ The parent decides a **provisional** tier at slice start, re-checks it **once** 
 
 | Tier | Triggers (any one) |
 |---|---|
-| **high** | authn / authz / permissions; money / billing; **destructive or data-rewriting** change to existing user data (drop / rename column, backfill, bulk update, delete); secrets or webhook-signature handling; production / irreversible operations; a public API contract others depend on |
-| **standard** | not high, and any of: new or changed data shape / persistence (**additive migrations — new table, new nullable column — are standard**); crosses ≥2 modules or layers; new dependency; new user flow |
+| **high** | authn / authz / permissions; money / billing; **destructive or data-rewriting** change to existing user data (drop / rename column, backfill that computes values from existing data, bulk update, delete); secrets or webhook-signature handling; production / irreversible operations; a public API contract others depend on |
+| **standard** | not high, and any of: new or changed data shape / persistence (**additive migrations — new table, new column that is nullable or has a constant default — are standard**); crosses ≥2 layers (UI / API / DB; style and theme files do not count); new dependency; new user flow |
 | **simple** | none of the above triggers (copy, style, one component / file-local logic; reversible) |
 
 Rules:
@@ -37,7 +37,7 @@ Rules:
 - `high` **must** name the trigger it hit. If you cannot name one, the tier is not high.
 - `standard` is the normal case for new capabilities. Do not default to `high` "to be safe".
 - An operator request such as `simple change` **requests** a tier; the high triggers still apply. If a trigger overrides the request, say so in one plain line.
-- **Upgrade** mid-slice when a trigger appears (build discovers a destructive migration; an admitted **hard-risk** Must on a `standard` slice — trigger: "hard-risk finding"). Say why. Upgrading does **not** reset used fix rounds.
+- **Upgrade** mid-slice when a trigger appears (build discovers a destructive migration; an admitted **hard-risk** Must on a `standard` slice — trigger: "hard-risk finding"). Say why. Upgrading does **not** reset used fix rounds, and does not re-run AC review or shaping; it adds an independent verifier and the fix-diff re-review only.
 - **Downgrade** when the trigger turns out false; say so.
 - A **role** from `/setup-helm` says *which model* does a job. It is **not** a mandate to spawn an agent. This table decides spawning.
 
@@ -49,10 +49,10 @@ Rules:
 | `shape-before-code` | skip | when crossing boundaries / new shape; parent thread | yes; independent shaper preferred |
 | `verify-outcome` | parent | parent or 1 verifier agent | independent verifier |
 | `eng-critique` | optional inline blind pass | once, first collect round | first collect round + re-review of hard-risk fix diffs (§6) |
-| **Independent agents per slice** | **0** | **≤2** | **≤4** |
+| **Independent agents per slice** | **0** | **≤2** (prefer verifier + eng-critic; AC review in the parent) | **≤4** |
 | **Fix-round budget** | **1** | **2** | **2** |
 
-Counting agents: count **distinct spawned reviewers / verifiers / shapers** per slice. The builder implementing the slice is not counted. Reusing the same verifier or eng-critic agent for a re-verify or a fix-diff re-review is **not** a new spawn. Single-model hosts: same tiers and budgets; "independent" becomes a blind pass in the same thread. **Single-model `high`:** the operator's ≤2-minute click script for each hard-risk AC is mandatory before PASS.
+Counting agents: count **by role, not by instance** — the distinct reviewer / verifier / shaper / product-critic roles spawned per slice. The builder implementing the slice is not counted. A fresh agent in a role already counted (a verifier for a re-verify, the eng-critic for a fix-diff re-review) does **not** count again, so one-shot-subagent hosts fit the same caps. Single-model hosts: same tiers and budgets; "independent" becomes a blind pass in the same thread. **Single-model `high`:** the operator's ≤2-minute click script for each hard-risk AC is mandatory before PASS.
 
 ## 3. Slice card
 
@@ -68,6 +68,7 @@ Tier: standard — trigger: new `links` table (additive)
 Frozen AC (at build start): AC3, AC4
 Envelope smokes (≤3): S1 home page loads; S2 existing short link still redirects
 Fix rounds: 0/2
+Slice base: <commit before the slice's first build>
 Checkpoint: <commit before last fix batch>
 Deferred:
 - [product] custom code length → next-slice candidate
@@ -103,32 +104,34 @@ The parent applies admission during triage and **downgrades unevidenced Musts it
 
 1. **Collect.** On one build snapshot: `verify-outcome`, then (per §2) `eng-critique` with the verify evidence. No edits in between.
 2. **Triage (parent).** Dedupe → admission → **Must (this round)** / **Deferred** / **Ignore**.
-3. **Checkpoint.** Git commit (or host equivalent) before the fix batch; record it in the card.
+3. **Checkpoint.** Git commit (or host equivalent) before the fix batch; record it in the card. (The **slice base** commit is recorded before the first build.)
 4. **Fix batch.** All Musts go to **one** `build-outcome` call in fix mode. The builder gets the Must list (repro + expected) and the slice card, not the critics' essays. A fix batch **counts as a round when issued**.
 5. **Re-verify scope.** FAILed ACs + **all envelope smokes (always)** + ACs whose area the fix diff touched. Not the whole P0.
 6. **Eng re-review.** `standard`: none (an admitted hard-risk Must upgrades the slice to `high` first). `high`: only when the fix diff touches **hard-risk code** — code in the modules named by the tier trigger or by a hard-risk Must — and only that diff, by the same eng-critic.
 7. **Later rounds** work only on items still open.
 
-Counting: the first collect round is free. Each issued **fix batch + its re-verify** is one fix round. If a re-verify is BLOCKED, the round still counts; it just waits for the click script.
+Counting: the first collect round is free. Each issued **fix batch + its re-verify** is one fix round. If a re-verify is BLOCKED, the round still counts; it just waits for the click script, and BLOCKED items are excluded from the progress check.
 
 ## 7. Exit states
 
-**Progress** after a fix round = at least one item from the fix batch went FAIL→PASS (or Must closed), and nothing went PASS→FAIL.
+**Progress** after a fix round = at least one item from the fix batch went FAIL→PASS (or Must closed), and nothing went PASS→FAIL. BLOCKED items are excluded; if every batch item is BLOCKED, the state is PENDING-HUMAN.
+
+When several states hold: **PENDING-HUMAN > STOP: no-progress > STOP: budget**.
 
 | State | Condition | Action |
 |---|---|---|
 | **PASS** | all frozen ACs PASS, envelope smokes PASS, no open Must | `plain-status` → next slice |
 | **STOP: budget** | fix rounds used up and a FAIL or Must remains | stop dispatching; stop options |
-| **STOP: no-progress** | after a fix round: (a) no item of the batch went FAIL→PASS, or (b) anything went PASS→FAIL (oscillation), or (c) an item still FAILs with the **same observed vs expected** for the second consecutive fix round. Some fixed + others still failing with new evidence **is progress**: continue on the remaining items within budget | stop **immediately**, even with budget left; on (b) **revert to the checkpoint** so everything that passed before passes again; stop options; record "needs root cause" |
-| **PENDING-HUMAN** | every remaining item is BLOCKED or an AC-defect waiting on the operator | one click script / one A/B; no budget spent while waiting |
+| **STOP: no-progress** | after a fix round: (a) no item of the batch went FAIL→PASS, or (b) anything went PASS→FAIL (oscillation), or (c) an item still FAILs with the **same observed vs expected** for the second consecutive fix round. Some fixed + others still failing with new evidence **is progress**: continue on the remaining items within budget | stop **immediately**, even with budget left; on (b) **revert to the checkpoint**, then re-run the envelope smokes once (not a fix round) to confirm what passed before passes again; stop options; record "needs root cause" |
+| **PENDING-HUMAN** | every remaining item is BLOCKED or an AC-defect waiting on the operator | one click script / one A/B; no budget spent while waiting; under a full-autonomy grant, continue with independent slices meanwhile |
 | **partial** | the result of option A or A′ (below) | record what was deferred; continue with independent slices |
 
 ### Stop options
 
-In **Waiting on you**, product language. Each option says what you get and what it costs. Recommendation is fixed by stop type: budget → **A**; no-progress → **D**; any open **hard-risk** Must → **A′**.
+In **Waiting on you**, product language. Each option says what you get and what it costs. Recommendation is fixed: any open **hard-risk** Must → **A′**; otherwise the first STOP on a behavior (budget or no-progress) → **A**; a second STOP on the same behavior → **D**. A first no-progress is usually a technical root-cause problem, not a wrong premise — the operator should not be asked to judge that.
 
-- **A.** Accept the last state where nothing that worked before is broken; the failing behavior (one sentence on what users would see) moves to the next slice
-- **A′.** (hard-risk open) Switch off or revert the risky part (feature off / revert to checkpoint); everything else stays; the risky part waits for you
+- **A.** Accept the last state where nothing that worked before is broken; the failing behavior (one sentence on what users would see) is recorded under `Stopped behaviors` / L0a "needs root cause" — not auto-scheduled (see carry-over)
+- **A′.** (hard-risk open) Revert the risky part to the **slice base**, or put it behind an off switch; then run **one** verify of the envelope smokes + a "risky path unreachable" check (not a fix round). If that verify fails, revert the whole slice to the slice base. Everything else stays; the risky part waits for you
 - **B.** Allow one more fix round ("last try fixed 2 of 3")
 - **C.** Drop or rewrite this requirement (patch L0a)
 - **D.** Rethink the approach — the premise may be wrong (`change-direction`)
@@ -152,7 +155,7 @@ A behavior that exited with STOP is listed under `Stopped behaviors` and promote
 - Subagents **report**. They do not spawn subagents and do not fix code. The builder is the exception, and only executes the Must list it was given.
 - Critics return findings, not patches.
 - Never one agent per FAIL, and never one playbook run per FAIL: multiple failing ACs go into one slice / one card / one budget.
-- `dual-try`: only on `standard` / `high`. Each attempt gets one verify and no fix rounds; the two attempts share one eng-critique. The bakeoff may use up to 4 agents in total; that replaces the slice cap for this slice. The keeper's next collect round is verify-only if the shared eng-critique reviewed the keeper's code.
+- `dual-try`: only on `standard` / `high`. Each attempt gets one verify and no fix rounds; the two attempts share one eng-critique. The bakeoff may use up to 4 agents, plus the tier's pre-build agents (AC review, shaper); that replaces the slice cap for this slice. Refresh the slice card (keep `Fix rounds`); never delete it mid-slice. The keeper's next collect round is verify-only if the shared eng-critique reviewed the keeper's code.
 
 ## 10. Anti-patterns
 

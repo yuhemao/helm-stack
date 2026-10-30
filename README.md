@@ -76,7 +76,7 @@ You usually do **not** need to memorize the rest. `helm-mode` routes to them.
 - **bounded-loop**
 - **product-not-plumbing**
 
-Example: `apply model-not-human-for-tech. pick the safer implementation via eng-critique.`
+Example: `apply model-not-human-for-tech. pick the safer implementation via a shaper-role comparison or an eng dual-try.`
 
 ## Mental model
 

@@ -27,4 +27,4 @@ Rules and agent counting: acceptance-gate §9. In short: `standard`/`high` only;
 3. Verify both with the same rubric (`verify-outcome`), once each.
 4. Eng-fork: run one `eng-critique` across both; pick by AC pass → fewer admitted Musts → simpler maintainability.
 5. Ux-fork: pick by AC pass; only escalate taste ties to the operator.
-6. Discard or quarantine the loser. Update the resolved L0a if product truth changed; refresh `docs/helm-now.md` or delete it.
+6. Discard or quarantine the loser. Update the resolved L0a if product truth changed; refresh the slice card in `docs/helm-now.md` (keep `Fix rounds`); never delete it mid-slice.
