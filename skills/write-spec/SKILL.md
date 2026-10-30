@@ -4,7 +4,7 @@ description: "Create or refresh the thin living product contract (L0a). Compatib
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.1.2"
+  version: "1.2.0"
 ---
 
 # Write spec (thin living product contract)
@@ -46,6 +46,7 @@ Adopted PRDs may keep their own headings; map Goal / Non-goals / Acceptance via 
 ## Failure modes
 ## Assumptions (labeled guess / inferred / measured)
 ## Open product questions
+## Known gaps (stopped / switched-off behaviors; added by the acceptance gate)
 ```
 
 Optional short `## Delivery slices`.

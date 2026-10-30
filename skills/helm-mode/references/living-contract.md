@@ -78,6 +78,7 @@ When reading/updating an adopted doc, map flexibly:
 | Acceptance criteria | 验收, 验收标准, AC, Acceptance, Done when, 测试要点 |
 | Failure modes | 异常, Errors, Edge cases |
 | Open product questions | 待定, Open questions, TBD |
+| Known gaps (stopped / switched-off behaviors, needs root cause) | 已知问题, Known issues, Known gaps |
 
 Prefer **patching acceptance in place** over rewriting the whole PRD into helm’s English outline.
 

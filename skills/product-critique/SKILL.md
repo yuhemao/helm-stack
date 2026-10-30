@@ -33,6 +33,7 @@ Resolve L0a first (`living-contract.md`) — an adopted PRD/spec is valid. Give 
 ## Output buckets
 
 - **Must fix (before freeze)** — rewrite/add the AC now; this is cheap because no code exists yet
+- **AC-defect** — two ACs the operator wrote contradict each other: do **not** rewrite them yourself; report it to the parent (human gate or autonomy default, acceptance-gate §4)
 - **Should fix** — useful; add if it fits the slice appetite, else `Deferred`
 - **Ignore now** — non-goal or appetite exceeded
 

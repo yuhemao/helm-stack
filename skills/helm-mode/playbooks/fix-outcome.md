@@ -2,7 +2,7 @@
 
 For a broken user flow or failing acceptance check. Gate rules: `references/acceptance-gate.md`.
 
-**Carry-over check first:** if the failing behavior is listed as a stopped behavior (slice card or L0a "needs root cause"), only start this playbook on an explicit operator request; under a full-autonomy grant, do not re-attempt it (§7 carry-over). Several failing ACs → **one** run of this playbook covering all of them (one card, one budget).
+**Carry-over check first:** if the failing behavior is listed as a stopped behavior (slice card `Stopped behaviors` or L0a Known gaps), only start this playbook on an explicit operator request; under a full-autonomy grant, do not re-attempt it (§7 carry-over). Several failing ACs → **one** run of this playbook covering all of them (one card, one budget).
 
 ## Steps
 

@@ -14,7 +14,7 @@ Works in any harness that supports the [Agent Skills](https://agentskills.io) st
 npx skills add yuhemao/helm-stack
 ```
 
-Or copy the `skills/` folder into your agent skills directory.
+Or copy the **whole** `skills/` folder into your agent skills directory (skills reference each other; partial installs break the acceptance gate).
 
 Then, in chat:
 

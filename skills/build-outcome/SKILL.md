@@ -13,7 +13,7 @@ Implement **only** the current slice. Prefer the `builder` model role when confi
 
 ## Build mode (first build of the slice)
 
-1. Resolve L0a (`living-contract.md`); read it and the **slice card** (tier, frozen ACs, envelope smokes) (pasted in your brief, or `docs/helm-now.md`). No card on a `standard`/`high` slice → ask the parent to write one first.
+1. Resolve L0a (`living-contract.md`); read it and the **slice card** (tier, frozen ACs, envelope smokes) (pasted in your brief, or `docs/helm-now.md`). No card on a `standard`/`high` slice → ask the parent to write one first. The card records the **Slice base** commit (the parent sets it before the first build; if the project has no git, `git init` + commit first).
 2. Stay inside **stack constraints**.
 3. `shape-before-code` as the tier says (acceptance-gate §2).
 4. Apply **decision-budget**: no plumbing questions to the human; uncertain tech → model gate.

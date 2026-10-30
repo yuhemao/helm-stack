@@ -23,7 +23,7 @@ This pack is for operators who steer **outcomes**. They may not read diffs. Trea
 2. Existing **PRD** or **spec** with features + acceptance/验收 **counts** — adopt it; pin `docs/helm.contract` if missing.
 3. Report `L0a: <path>` once. **Do not** say "missing spec/helm-spec" when a strong PRD/spec exists.
 4. Then match a playbook and open its steps.
-5. **Per slice, before build:** pick the provisional risk tier (with its trigger), run the AC review, re-check the tier once, freeze ACs + envelope smokes, and write the **slice card** — see [`references/acceptance-gate.md`](references/acceptance-gate.md).
+5. **Per slice, before build:** follow the **Slice checklist** at the top of `references/acceptance-gate.md`: tier with trigger, record Slice base, AC review, re-check tier, freeze ACs + envelope smokes in the **slice card** — see [`references/acceptance-gate.md`](references/acceptance-gate.md).
 
 ## Non-negotiables
 

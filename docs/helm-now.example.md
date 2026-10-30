@@ -8,11 +8,13 @@ Tier: standard — trigger: new `links` table (additive)
 Frozen AC (at build start): AC1 create link, AC2 redirect works
 Envelope smokes (≤3): S1 home page loads
 Fix rounds: 0/2
+Slice base: (commit before the slice's first build)
 Checkpoint: (set before each fix batch)
 Deferred:
 - [product] custom code length → next-slice candidate
 - [eng/should] index on links.code
 Stopped behaviors: none
+Decision trail: none
 
 Eng decisions this slice:
 - Store codes in Supabase table `links` with unique code
@@ -20,3 +22,6 @@ Eng decisions this slice:
 - No analytics in this slice (non-goal)
 
 Clear or fully rewrite this file when the slice ends or the product premise changes. Promote product `Deferred` items once into L0a first.
+
+## Ledger
+<slice> | tier+trigger | agents by role | verify/eng/product runs | fix rounds | exit
