@@ -5,7 +5,7 @@ license: MIT
 disable-model-invocation: true
 metadata:
   author: helm-stack
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Setup helm
@@ -29,6 +29,8 @@ Write helm's model settings, one model (or alias) per role. This is how **model 
 | `verifier` | `verify-outcome` | Run checks; tool-heavy is fine |
 
 Valid aliases: `inherit-parent`, `auto` (run on the parent chat model).
+
+**Role ≠ agent.** A role says *which model* does that job when it runs. It does **not** mean every role gets its own subagent on every slice. How many independent agents a slice may spawn is set by its risk tier (`simple` 0, `standard` ≤2, `high` ≤2 per collect round) — see `helm-mode/references/acceptance-gate.md`. When a tier keeps a job in the parent thread, the parent simply runs that pass itself.
 
 ## Steps
 

@@ -5,7 +5,7 @@ license: MIT
 disable-model-invocation: true
 metadata:
   author: helm-stack
-  version: "1.1.2"
+  version: "1.2.0"
   audience: non-programmer-commander
 ---
 
@@ -23,6 +23,7 @@ This pack is for operators who steer **outcomes**. They may not read diffs. Trea
 2. Existing **PRD** or **spec** with features + acceptance/验收 **counts** — adopt it; pin `docs/helm.contract` if missing.
 3. Report `L0a: <path>` once. **Do not** say "missing spec/helm-spec" when a strong PRD/spec exists.
 4. Then match a playbook and open its steps.
+5. **Per slice, before build:** pick the risk tier (with its trigger), run the AC review, freeze ACs + envelope smokes, and write the **slice card** — see [`references/acceptance-gate.md`](references/acceptance-gate.md).
 
 ## Non-negotiables
 
@@ -31,9 +32,10 @@ This pack is for operators who steer **outcomes**. They may not read diffs. Trea
 3. **Observable acceptance.** "Done" means a human (or scripted driver) can exercise a checklist. Compiles / "looks good" is not done. Use **verify-outcome** before claiming success.
 4. **Vertical slices.** Thin end-to-end increments; each ends in acceptance the operator can judge without reading code.
 5. **Cheap reversal.** Premise wrong → **recover-wrong-turn**: revert slice, rewrite L0a, discard L1/L2, fresh thread. Do not sync ten docs.
-6. **Tokens for proof.** Extra tokens buy oracles: shape, eng-critique, product-critique, dual-try, verify — not planning prose or tech interviews with the operator.
-7. **Product not plumbing.** Operator replies stay in outcomes and gates. Engineering work still happens via model gates; summarize under Handled by models when useful.
-8. **Precise terms.** Prefer [`references/terminology.md`](references/terminology.md).
+6. **Tokens for first-round proof.** Extra tokens buy one high-signal round of oracles (AC review, verify, bounded eng-critique, dual-try when warranted) — not planning prose, tech interviews with the operator, or unbounded fix→verify loops.
+7. **Bounded acceptance.** Every slice runs the gate in [`references/acceptance-gate.md`](references/acceptance-gate.md): risk tier, frozen ACs, collect-then-fix, Must admission, narrow re-verify, fix-round budget, stop on no progress. See **bounded-loop**.
+8. **Product not plumbing.** Operator replies stay in outcomes and gates. Engineering work still happens via model gates; summarize under Handled by models when useful.
+9. **Precise terms.** Prefer [`references/terminology.md`](references/terminology.md).
 
 ## Principles index
 
@@ -48,6 +50,7 @@ Read the leaf skill when you apply it. Cite only principles you actually read th
 | [`principle-vertical-slice`](../principle-vertical-slice/SKILL.md) | Breaking work down; sequencing delivery |
 | [`principle-cheap-reversal`](../principle-cheap-reversal/SKILL.md) | Premise wrong; scope thrash; doc/context swamp |
 | [`principle-token-for-proof`](../principle-token-for-proof/SKILL.md) | Choosing where to spend extra model calls |
+| [`principle-bounded-loop`](../principle-bounded-loop/SKILL.md) | Planning critique/verify; spawning review agents; tempted to run another fix→verify round |
 | [`principle-product-not-plumbing`](../principle-product-not-plumbing/SKILL.md) | Writing any reply to the operator |
 
 Agent-internal engineering reminders (not commander vocabulary): [`references/eng-principles.md`](references/eng-principles.md).
@@ -65,8 +68,9 @@ Load these by reading their SKILL.md when a playbook step needs them. Do not mak
 | Settle data/API shape before a non-trivial slice | [`shape-before-code`](../shape-before-code/SKILL.md) |
 | Implement the current slice | [`build-outcome`](../build-outcome/SKILL.md) |
 | Independent engineering adversarial review | [`eng-critique`](../eng-critique/SKILL.md) |
-| Adversarial product check vs living contract | [`product-critique`](../product-critique/SKILL.md) |
+| AC review vs living contract (once, before build) | [`product-critique`](../product-critique/SKILL.md) |
 | Run / walk acceptance; plain pass/fail | [`verify-outcome`](../verify-outcome/SKILL.md) |
+| Tier, freeze, triage, budget, exit states | [`references/acceptance-gate.md`](references/acceptance-gate.md) |
 | Two short attempts (UX or eng fork) | [`dual-try`](../dual-try/SKILL.md) |
 | Wrong turn / doc swamp / bad premise | [`recover-wrong-turn`](../recover-wrong-turn/SKILL.md) |
 | Catch the operator up in plain words | [`plain-status`](../plain-status/SKILL.md) |
@@ -98,15 +102,27 @@ Match the operator's ask to one playbook and open `playbooks/<file>.md`:
 | Recover | [`playbooks/recover.md`](playbooks/recover.md) | Doc swamp, wrong premise, unmaintainable context |
 | Dual path | [`playbooks/dual-path.md`](playbooks/dual-path.md) | High uncertainty; try two thin paths (UX or eng) |
 
-If nothing fits, design a **short** bespoke playbook (max 10 steps) that still ends in observable acceptance and still runs **eng-critique** + **verify-outcome** for non-trivial code. Prefer reusing sub-skills over inventing ceremony.
+If nothing fits, design a **short** bespoke playbook (max 10 steps) that still ends in observable acceptance and still runs the acceptance gate for its tier. Prefer reusing sub-skills over inventing ceremony.
 
-## Default quality loop (non-trivial slices)
+## Default quality loop (every slice; tier sets the weight)
 
 ```text
-shape-before-code → build-outcome → eng-critique → product-critique → verify-outcome → plain-status
+tier + AC review (product-critique) → freeze (slice card)
+→ [shape-before-code] → build-outcome
+→ collect round: verify-outcome ∥ eng-critique   (same snapshot; no edits in between)
+→ parent triage (Must admission) → one fix batch → narrow re-verify
+→ PASS | STOP: budget | STOP: no-progress → plain-status
 ```
 
-Trivial one-file reversible edits may `skip: shape-before-code` / `skip: eng-critique` with a one-line reason. Skipping both without reason is a pack violation.
+| Tier | Runs | Independent agents | Fix rounds |
+|---|---|---|---|
+| `simple` | inline AC check → build → verify (parent thread) | 0 | 1 |
+| `standard` | AC review → [shape] → build → verify ∥ eng-critique (first round only) | ≤2 per slice | 2 |
+| `high` | AC review → shape → build → verify ∥ eng-critique; eng re-review only of fix diffs touching hard-risk code | ≤2 per round, ≤5 per slice | 2 |
+
+Tier triggers, slice card, Must admission, re-verify scope and stop options: [`references/acceptance-gate.md`](references/acceptance-gate.md). `high` must name its trigger. Skipping a step the tier requires needs `skip: <reason>`.
+
+**Parent is the only dispatcher.** Subagents report findings; they do not spawn agents or fix code (except the builder executing the Must batch it was handed). Never one agent per FAIL. Never another round past budget without the operator choosing it.
 
 ## Reply shape
 
@@ -122,9 +138,9 @@ No long implementation tours. No asking them to read diffs.
 
 ## Harness notes
 
-- **Subagents / models:** use separate agents or stronger models for `shape-before-code`, `eng-critique`, `product-critique`, and eng `dual-try` when available. Read `/setup-helm` or the host's helm model rule if present. If only one model exists: blind second pass with rubric; say so under Handled by models.
+- **Subagents / models:** spawn independent agents **only as the slice tier allows** (`simple` 0, `standard` ≤2, `high` ≤2 per round). `/setup-helm` roles choose *which model* does a job; they are not a mandate to spawn. No nested fleets. If only one model exists: blind second pass with rubric inside the same budget; say so under Handled by models.
 - **Questions:** structured question tool when present; else numbered A/B in chat.
 - **Verification:** run the app / tests / browser tools when possible; otherwise honest BLOCKED + click path.
 - **Persistence:** resolve and keep one L0a path (`docs/helm.contract` recommended). Do not claim "missing spec" when a PRD with acceptance already exists — adopt it. Never duplicate PRD into a second helm-spec body.
 
-More: [`references/living-contract.md`](references/living-contract.md), [`references/harness.md`](references/harness.md), [`references/prompting.md`](references/prompting.md), [`references/terminology.md`](references/terminology.md), [`references/eng-principles.md`](references/eng-principles.md).
+More: [`references/acceptance-gate.md`](references/acceptance-gate.md), [`references/living-contract.md`](references/living-contract.md), [`references/harness.md`](references/harness.md), [`references/prompting.md`](references/prompting.md), [`references/terminology.md`](references/terminology.md), [`references/eng-principles.md`](references/eng-principles.md).

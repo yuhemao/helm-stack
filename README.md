@@ -41,10 +41,10 @@ You usually do **not** need to memorize the rest. `helm-mode` routes to them.
 - **Thin product authority** — one living contract; **compatible with existing `PRD.md` / `spec.md` / `helm-spec.md`** (auto-adopt + pin `docs/helm.contract`). Never maintain two copies
 - **Optional working memory** (`docs/helm-now.md`) — active slice only; discarded on premise change
 - **Decision budget**: human gates vs **model gates** vs act — never interview you about libraries
-- **Quality loop**: shape → build → **eng-critique** → product-critique → verify
+- **Bounded quality loop** (1.2): risk tier → AC review + **freeze** → [shape] → build → **verify ∥ eng-critique** on one snapshot → one fix batch → narrow re-verify → stop at budget (`simple` 1 / `standard` 2 / `high` 2 rounds) or on no progress
 - **Observable acceptance**: done means you can click a checklist
 - **Cheap reversal**: rewrite L0a + discard L1/L2 + fresh thread — do not sync ten docs
-- **Tokens for proof**: critique, dual-try, verify — not more planning prose
+- **Tokens for first-round proof**: one strong verify + one bounded critique — not more planning prose, not endless fix→verify loops
 
 ## Sub-skills (loaded by the mode)
 
@@ -57,8 +57,8 @@ You usually do **not** need to memorize the rest. `helm-mode` routes to them.
 | `shape-before-code` | Settle structure (model gate) before coding |
 | `build-outcome` | Implement one slice |
 | `eng-critique` | Independent engineering adversarial review |
-| `product-critique` | Adversarial product check vs the contract |
-| `verify-outcome` | Runnable / clickable pass/fail in plain words |
+| `product-critique` | AC review vs the contract, once before build (then ACs freeze) |
+| `verify-outcome` | Runnable / clickable pass/fail in plain words — the primary oracle |
 | `dual-try` | Two short attempts; UX or eng fork rules |
 | `recover-wrong-turn` | Revert + rewrite L0a + discard L1/L2 + fresh thread |
 | `plain-status` | Waiting on you vs Handled by models |
@@ -73,6 +73,7 @@ You usually do **not** need to memorize the rest. `helm-mode` routes to them.
 - **vertical-slice**
 - **cheap-reversal**
 - **token-for-proof**
+- **bounded-loop**
 - **product-not-plumbing**
 
 Example: `apply model-not-human-for-tech. pick the safer implementation via eng-critique.`
@@ -84,11 +85,15 @@ You (product / UX / acceptance)
     → /helm-mode
         → restatement / write-spec / cut-scope
         → vertical-slice
-        → shape-before-code → build-outcome
-              ⇄ eng-critique  ⇄ product-critique
-        → verify-outcome → you click when needed
+        → tier + product-critique (AC review) → freeze (slice card)
+        → [shape-before-code] → build-outcome
+        → collect: verify-outcome ∥ eng-critique  → triage → one fix batch → re-verify
+              (≤ budget; stop on no progress)
+        → plain-status → you click / pick a stop option when needed
         → next slice  |  recover-wrong-turn if the premise was wrong
 ```
+
+Example steer: `apply bounded-loop. tier this slice and say the trigger.`
 
 ## Docs degree (not "zero docs", not "doc pyramid")
 

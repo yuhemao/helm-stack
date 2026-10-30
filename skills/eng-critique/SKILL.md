@@ -1,35 +1,56 @@
 ---
 name: eng-critique
-description: "Independent engineering adversarial review of the slice: correctness, boundaries, security, fragility, behavior tests. Prefer a different model or blind pass. Not for the operator to read as a code review."
+description: "Independent engineering adversarial review of a slice snapshot: correctness, boundaries, security, fragility, behavior tests. Runs inside the collect round next to verify-outcome; Musts need evidence or a hard-risk scenario. Prefer a different model or blind pass. Not for the operator to read as a code review."
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Eng critique
 
-You are a skeptical **engineering oracle**, not a cheerleader and not a product editor (use `product-critique` for AC/scope).
+You are a skeptical **engineering oracle**, not a cheerleader and not a product editor (AC quality is `product-critique`'s job, before build). You run **inside a collect round** of the acceptance gate ([`../helm-mode/references/acceptance-gate.md`](../helm-mode/references/acceptance-gate.md)).
 
-## Blindness
+## When it runs (by tier)
 
-If a second agent/model is available (prefer `eng-critic` from `/setup-helm`): give it the living contract ACs for this slice, the diff or file list, and how to run checks. Do **not** give the builder's self-justification essay.
+| Tier | Runs |
+|---|---|
+| `simple` | Optional short blind pass in the parent thread |
+| `standard` | **Once**, in the first collect round. Not after fix batches |
+| `high` | First collect round; then only on fix diffs that touch hard-risk code, reviewing **that diff only** |
 
-If only one agent exists: start a fresh critique section that may only use ACs + code/diff + measured verify evidence.
+Spawn a separate agent only when the tier allows it. Do not spawn further agents yourself.
+
+## Blindness and inputs
+
+Give the reviewer (prefer `eng-critic` from `/setup-helm`, ideally a different family than `builder`):
+
+- the **frozen ACs** from the slice card
+- the diff or changed-file list of **this snapshot**
+- how to run checks
+- the **verify evidence** of the same snapshot when available
+
+Do **not** give the builder's self-justification essay. Single-agent host: a fresh critique section that may only use ACs + code/diff + measured verify evidence.
 
 ## Checklist
 
-- Incorrect behavior vs ACs or silent failure modes
+- Incorrect behavior vs frozen ACs, or silent failure modes
 - Trust of external input / authz gaps / secret handling (state in concrete terms)
 - Fragile abstractions, duplicated invariants, illegal states left representable
 - Missing or implementation-coupled tests where a cheap behavior check exists
-- Scope creep that increases maintenance without serving P0 ACs
+- Scope creep that increases maintenance without serving the frozen ACs
 - "It compiles" offered as proof
 
 ## Output buckets (agent-facing)
 
-- **Must fix** — blocks claiming the slice done
-- **Should fix** — cheap, reduces real risk
+Every **Must** must carry its admission ticket, or it is a Should:
+
+- **Must fix** — one of:
+  - `AC-violation: <AC id>` + evidence (measured repro, or exact input → wrong output)
+  - `hard-risk: <security|authz|data-loss|secret-leak|irreversible>` + a concrete failure scenario (who does what → what goes wrong)
+- **Should fix** — real but non-blocking. Goes to the slice card `Deferred`. Never opens a fix round on its own.
 - **Ignore now** — outside appetite / non-goals
 
-Apply Must-fix before verify claims success. Summarize for the operator as one line under **Handled by models** (e.g. "Engineering review: 2 must-fixes applied"). Do not paste a line-by-line review unless they ask.
+Return **findings only**: no patches, no edits, no follow-up review rounds you start yourself. The parent triages, may downgrade unevidenced Musts, and puts admitted Musts into **one** fix batch together with verify FAILs.
+
+Summarize for the operator as one line under **Handled by models** (e.g. "Engineering review: 2 must-fixes applied, 3 deferred"). Do not paste a line-by-line review unless they ask.

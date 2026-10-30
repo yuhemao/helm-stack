@@ -32,12 +32,32 @@ Use these terms in the living contract, questions, and agent-to-agent briefs. Th
 | **Happy path** | Main success flow | "normal use" |
 | **Edge case** | Rare but valid input/state | "weird stuff" |
 | **Failure mode** | How the system behaves when something breaks | "if it errors" |
-| **Definition of done** | ACs green + verify (+ eng-critique Must-fix cleared for non-trivial work) | "feels finished" |
+| **Definition of done** | Gate exit `PASS`: frozen ACs + envelope smokes green, no admitted Must open | "feels finished" |
 | **Regression** | Previously passing behavior now fails | "something broke" |
 | **Smoke test** | Minimal path proving the app stands up | "quick look" |
 | **Oracle** | Independent check (tests, second model, human click) | author self-claim |
 | **Eng critique** | Model-gate engineering adversarial review | asking the human to read the diff |
-| **Product critique** | Model-gate product/AC adversarial review | cheerleading self-check |
+| **Product critique** | Model-gate AC review before build; runs once, then ACs freeze | cheerleading self-check; adding Musts after build |
+
+## Acceptance gate (bounded loop)
+
+| Term | Meaning | Prefer over |
+|---|---|---|
+| **Bounded loop** | Acceptance as a gate with tier, freeze, batch, envelope, budget and stop states | "keep fixing until it's perfect" |
+| **Risk tier** | `simple` / `standard` / `high`, chosen by named triggers; sets agents, critique and budget | "non-trivial" by gut feel |
+| **Trigger** | The named condition that put a slice in its tier (e.g. "schema migration") | "seems risky" |
+| **Slice card** | Top of `helm-now.md`: tier, frozen ACs, envelope, fix rounds, Deferred | scattered notes |
+| **AC freeze** | Slice ACs fixed at build start; only hard-risk findings may add Musts | moving the target during verify |
+| **Regression envelope** | ≤3 named adjacent smokes verified with the slice | full P0 after every edit |
+| **Collect round** | verify + eng-critique on one snapshot, no edits in between | fix-as-you-find |
+| **Must admission** | A Must needs a frozen-AC violation with evidence, or a hard-risk scenario | critic opinion as blocker |
+| **Hard risk** | security / authz, data loss, secret leak, irreversible damage | "could be a problem" |
+| **Fix batch** | All admitted Musts handed to one build | one agent per finding |
+| **Fix round** | One fix batch + narrow re-verify; budget `simple` 1, `standard`/`high` 2 | "as needed" |
+| **No-progress stop** | Same FAIL persists or a PASS flips to FAIL → stop now | burning the rest of the budget |
+| **Stop options** | A accept + defer / B one more round / C change AC / D change direction | technical dump on the operator |
+| **Deferred** | Findings moved out of the slice; product ones promoted once to L0a | losing findings / re-reviewing them |
+| **AC-defect** | AC unreachable or contradictory; routes to change-direction, not a FAIL | fixing code toward an impossible AC |
 
 ## Delivery shape
 

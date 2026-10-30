@@ -4,12 +4,20 @@ description: "Settle data shape, boundaries, and illegal states before implement
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Shape before code
 
 For non-trivial slices, **name the shape before writing feature logic**.
+
+## When (by tier)
+
+| Tier | Shape |
+|---|---|
+| `simple` | skip |
+| `standard` | when the slice crosses modules or invents structure; the parent thread may do it |
+| `high` | yes; independent `shaper` preferred |
 
 ## Do
 
@@ -23,5 +31,6 @@ For non-trivial slices, **name the shape before writing feature logic**.
 - Produce a long design novel for the operator
 - Ask the human which ORM, folder layout, or error-type style to use
 - Skip this on boundary-crossing or greenfield structure work without `skip: <reason>`
+- Run a dual sketch on a `simple` slice
 
-Prefer the `shaper` model role when `/setup-helm` (or equivalent) is configured.
+Prefer the `shaper` model role when `/setup-helm` (or equivalent) is configured. A role picks the model; whether to spawn a separate agent is decided by the slice tier.

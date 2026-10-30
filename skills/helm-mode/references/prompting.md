@@ -43,7 +43,9 @@ Prefer a different model for eng-critic than builder when available.
 - `apply one-source-of-truth` / `apply thin-authority` — one L0a only; pin with docs/helm.contract; never PRD+helm-spec duplicates
 - `apply cheap-reversal` — revert this slice; rewrite L0a; fresh thread
 - `apply observable-acceptance` — rewrite ACs as clickable checks
-- `apply token-for-proof` — spend tokens on critique/verify, not more planning
+- `apply token-for-proof` — spend tokens on one strong round of verify/critique, not more planning or more rounds
+- `apply bounded-loop` — tier the slice (say the trigger), freeze ACs + ≤3 smokes, collect verify + eng findings before fixing, Musts need AC evidence or a hard-risk scenario, max 2 fix rounds, stop on no progress
+- `simple change` — treat as `simple` tier: parent thread only, build → verify, 1 fix round
 - `plain-status` — Waiting on you vs Handled by models
 - `dual-try this slice` — two short attempts; say ux-fork or eng-fork
 - `new task` — stop continuing the previous playbook
@@ -56,3 +58,4 @@ Prefer a different model for eng-critic than builder when available.
 - "Make it production-ready" with no AC
 - Asking the operator to judge diffs or pick libraries
 - Continuing a polluted thread after a premise failure
+- "Keep fixing until everything passes" with no round budget (use a full-autonomy grant; the gate still stops and defers)

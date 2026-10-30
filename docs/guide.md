@@ -26,8 +26,9 @@ Only ask me product/UX gates. Done when: …
 |---|---|
 | Requirements / scope | Shape before code |
 | UX and frontend taste | Implementation |
-| Final acceptance clicks | Eng critique + product critique |
-| Irreversible / legal / money gates | Dual-try on eng forks; verify loops |
+| Final acceptance clicks | AC review (product critique) + eng critique |
+| Irreversible / legal / money gates | Dual-try on eng forks; bounded verify rounds |
+| Stop options when a slice hits its budget | Tier, triage, fix batches |
 
 helm-stack does **not** mean "fewer quality practices." It means **quality practices stay, the reviewer is a model, the human stops being the tech auditor.**
 
@@ -54,7 +55,13 @@ Changed: commander-facing vocabulary; technical escalation to **model gates**; t
 
 ## When to spend more tokens
 
-Buy oracles: `shape-before-code`, `eng-critique`, `product-critique`, `dual-try`, extra `verify-outcome`. Do not buy more planning chapters or tech interviews with the operator.
+Buy **one strong first round** of oracles: AC review before build, one measured `verify-outcome`, one bounded `eng-critique`, `dual-try` when uncertainty is high. Do not buy more planning chapters, tech interviews with the operator, or extra fix→verify rounds past budget.
+
+## Acceptance gate (1.2)
+
+Each slice gets a **risk tier** (`simple` / `standard` / `high`, by named triggers). ACs **freeze** when building starts. Verify and engineering review look at the **same** build; all must-fixes go into **one** fix batch; re-verify checks only what changed. Budget: `simple` 1 fix round, `standard`/`high` 2. Same failure twice, or something that worked breaks → stop. When a slice stops you get four plain options (accept and defer / one more round / change the requirement / rethink). Details: `skills/helm-mode/references/acceptance-gate.md`.
+
+Steer: `apply bounded-loop. tier this slice and say the trigger.`
 
 ## Recovery mantra
 

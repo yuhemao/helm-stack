@@ -4,7 +4,7 @@ description: "Break work into vertical slices: thin end-to-end increments with t
 license: MIT
 metadata:
   author: helm-stack
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Vertical slice
@@ -25,9 +25,11 @@ A valid slice:
 Write a short ordered list into the chat (and optionally a short `## Delivery slices` section in the resolved L0a — not a second authority file):
 
 ```text
-Slice 1: <outcome> — AC…
-Slice 2: <outcome> — AC…
+Slice 1: <outcome> — tier guess: standard (new table) — AC…
+Slice 2: <outcome> — tier guess: simple — AC…
 ```
+
+The tier guess is confirmed (with its trigger) when the slice starts — see `helm-mode/references/acceptance-gate.md`. Slices that would be `high` are good candidates to split so the risky part is small.
 
 ## Rules
 
