@@ -14,7 +14,6 @@ Deferred:
 - [product] custom code length → next-slice candidate
 - [eng/should] index on links.code
 Stopped behaviors: none
-Decision trail: none
 
 Eng decisions this slice:
 - Store codes in Supabase table `links` with unique code
@@ -22,6 +21,9 @@ Eng decisions this slice:
 - No analytics in this slice (non-goal)
 
 Clear or fully rewrite this file when the slice ends or the product premise changes. Promote product `Deferred` items once into L0a first.
+
+## Decisions
+(full-autonomy defaults; operator clears after reading)
 
 ## Ledger
 <slice> | tier+trigger | agents by role | verify/eng/product runs | fix rounds | exit

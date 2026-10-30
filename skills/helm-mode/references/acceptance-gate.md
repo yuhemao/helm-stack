@@ -97,14 +97,16 @@ Deferred:
 - [product] custom code length → next-slice candidate
 - [eng/should] index on links.code
 Stopped behaviors: (filled on STOP or A′; see §7)
-Decision trail: (one line per default applied under full autonomy)
 ```
+
+Decisions made under a full-autonomy grant go to `## Decisions` at the bottom of `docs/helm-now.md` (one line each: what was chosen, what it means for users, how to reverse it) — **not** inside the card, so they survive the card being cleared. This applies to `simple` slices too. The operator clears `## Decisions` after reading it.
 
 At slice end:
 
 1. Append one **ledger line** to the `## Ledger` section at the bottom of `docs/helm-now.md` (kept across slices; delete only on a premise change): `<slice> | tier+trigger | agents by role | verify/eng/product runs | fix rounds n/N | exit state`.
-2. Promote product-relevant `Deferred` items **once** into L0a (P1 / Open product questions), and `Stopped behaviors` into L0a `## Known gaps` (create that heading if missing).
-3. Drop the rest; clear the card. Do not sync it continuously with L0a.
+2. Leave `## Decisions` as is (the operator clears it).
+3. Promote product-relevant `Deferred` items **once** into L0a (P1 / Open product questions), and `Stopped behaviors` into L0a `## Known gaps` (create that heading if missing).
+4. Drop the rest; clear the card. Do not sync it continuously with L0a.
 
 ## 4. Freeze
 
@@ -165,13 +167,13 @@ Actions on no-progress: stop now, even with budget left. On (b): revert to the c
 
 In **Waiting on you**, product language. Each option says what you get and what it costs. Recommendation is fixed: any open **hard-risk** Must → **A′**; otherwise the first STOP on a behavior (budget or no-progress) → **A**; a second STOP on the same behavior → **D**. A first no-progress is usually a technical root-cause problem, not a wrong premise — the operator should not be asked to judge that.
 
-- **A.** Accept the last state where nothing that worked before is broken; the failing behavior (one sentence on what users would see) is recorded under `Stopped behaviors` / L0a Known gaps — not auto-scheduled (see carry-over). **Its unfinished entry point is hidden or disabled** (or the slice reverted to the slice base) so users cannot reach the failing path; check that in the same envelope re-run
+- **A.** Accept the last state where nothing that worked before is broken; the failing behavior (one sentence on what users would see) is recorded under `Stopped behaviors` / L0a Known gaps — not auto-scheduled (see carry-over). **Its unfinished entry point is hidden or disabled** (or the slice reverted to the slice base) so users cannot reach the failing path; then run **one** verify of the envelope smokes + "entry point unreachable" (not a fix round), on every path into A
 - **A′.** (hard-risk open) Revert the risky part to the **slice base**, or put it behind an off switch; then run **one** verify of the envelope smokes + a "risky path unreachable" check (not a fix round). If that verify fails, revert the whole slice to the slice base. Everything else stays; the risky part waits for you. Record the switched-off feature, and how to switch it back on, under `Stopped behaviors` / L0a Known gaps
 - **B.** Allow one more fix round — adds exactly **1** round to this slice ("last try fixed 2 of 3")
 - **C.** Drop or rewrite this requirement (patch L0a)
 - **D.** Rethink the approach — the premise may be wrong (`change-direction`)
 
-**Full-autonomy grant:** take **A** by default — or **A′** if any open Must is hard-risk; never leave a hard-risk hole live, and never build later slices on top of it. Record the choice as one line under `Decision trail` in the slice card, mark the slice `partial` (or `blocked-on-human` for A′), continue only with slices that do not depend on it. Never add rounds on your own.
+**Full-autonomy grant:** take **A** by default — or **A′** if any open Must is hard-risk; never leave a hard-risk hole live, and never build later slices on top of it. Record the choice as one line under `## Decisions` in `docs/helm-now.md`, mark the slice `partial` (or `blocked-on-human` for A′), continue only with slices that do not depend on it. Never add rounds on your own.
 
 ### Carry-over rule (no cross-slice reset)
 

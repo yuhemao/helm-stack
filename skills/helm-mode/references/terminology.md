@@ -59,6 +59,7 @@ Use these terms in the living contract, questions, and agent-to-agent briefs. Th
 | **Carry-over rule** | A stopped behavior is not re-sliced for a fresh budget without the operator | "new slice, new budget" |
 | **Slice base** | Commit recorded before a slice's first build; A′ / full-slice revert target | "the old version somewhere" |
 | **Known gaps** | L0a section for stopped / switched-off behaviors needing root cause | hiding failures in Open questions |
+| **Decisions (helm-now)** | `## Decisions` in `docs/helm-now.md`: defaults taken under full autonomy; read back in the morning report | silent defaults |
 | **Ledger line** | One line per finished slice in `helm-now.md` `## Ledger`: tier, agents, runs, rounds, exit | untraceable cost |
 | **Checkpoint (fix)** | Commit made before each fix batch; revert target on oscillation | fixing forward on a broken state |
 | **Deferred** | Findings moved out of the slice; product ones promoted once to L0a | losing findings / re-reviewing them |

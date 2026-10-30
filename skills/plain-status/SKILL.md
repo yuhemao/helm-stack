@@ -39,4 +39,4 @@ Under a full-autonomy grant, do not ask: state which option was applied by defau
 
 ## After an unattended run
 
-When the operator returns after a full-autonomy grant, open with a **Decided while you were away** list built from each slice card's `Decision trail`: one line per default (what was chosen, what it means for users, how to reverse it). Then the normal sections.
+When the operator returns after a full-autonomy grant, open with a **Decided while you were away** list built from `## Decisions` in `docs/helm-now.md`: one line per default (what was chosen, what it means for users, how to reverse it). Then the normal sections.
