@@ -17,7 +17,7 @@ L0a is **one write-path**, not a filename religion. **PRD** and **spec** docs ar
 2. **Operator-named path** — prompt says “use `docs/…/PRD.md`” / “spec is `…`”: that path wins; write `docs/helm.contract`.
 3. **Default helm file** — `docs/helm-spec.md` if it is a **real** contract (has product + acceptance), not a pointer stub.
 4. **Adopt existing PRD or spec** — scan candidates (below). Prefer **exactly one** strong candidate. Adopt in place. Pin with `docs/helm.contract`. **Do not** copy body into a new `helm-spec.md`.
-5. **Create only if none** — thin `docs/helm-spec.md` via `write-spec`, then pin `docs/helm.contract`.
+5. **Create only if none** — thin `docs/helm-spec.md` via `write-spec`, then pin `docs/helm.contract`. **Exception:** if the only work is a `simple`-tier change (copy, style, file-local; see `acceptance-gate.md` §2), do not create a contract for it — report `L0a: none (simple change)` and keep its ACs in the slice card. Create the contract when the first `standard`/`high` slice arrives.
 
 ### Candidate paths (search in this order; stop at first exclusive strong hit when unique)
 

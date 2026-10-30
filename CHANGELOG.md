@@ -15,6 +15,7 @@ Problem (1.1.x field use): even simple features spawned several independent agen
 - **Carry-over rule**: a stopped behavior is not re-sliced or re-run as `fix-outcome` for a fresh budget without the operator
 - **Hard-risk protection**: hard-risk findings bypass freeze, upgrade `standard` → `high`, and under full autonomy are switched off (A′) rather than accepted
 - `evals/scenarios.md` — seven replay scenarios to compare 1.1.2 vs 1.2.0
+- `evals/case-b-ledger-session.md` + `evals/fixtures/ledger/` — a multi-slice, partly unattended session on a second app
 
 ### Changed
 
@@ -30,7 +31,7 @@ Problem (1.1.x field use): even simple features spawned several independent agen
 
 ### Audit
 
-An independent agent simulated the call chains (S1–S8) on the first 1.2 draft and found 2 P0 / 11 P1 / 12 P2 issues (tier boundary conflict, cross-slice budget reset, no hard-risk exception under autonomy, agent cap vs high requirements, undefined "same FAIL", leftover eng-critique routing, and others). This release includes the fixes.
+An independent agent simulated the call chains (S1–S8) on the first 1.2 draft and found 2 P0 / 11 P1 / 12 P2 issues (tier boundary conflict, cross-slice budget reset, no hard-risk exception under autonomy, agent cap vs high requirements, undefined "same FAIL", leftover eng-critique routing, and others). A second round found 0 P0 / 4 P1 / 13 P2; those are fixed too. A third round was run with a different (smaller) model on Case B. This release includes the fixes.
 
 ### Unchanged on purpose
 

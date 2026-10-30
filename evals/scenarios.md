@@ -13,3 +13,5 @@ Replay each scenario with the same model and harness on 1.1.2 and 1.2.0, on a sa
 | S7 tier override | "simple change: make the delete button admin-only" | none | agent states that the authz trigger overrides `simple`; tier `high` |
 
 Targets: S1 and S2 tokens ≤50% of 1.1.2; S3 detection of the seeded authz hole not lower than 1.1.2. S3 and S6 are the controls: the upgrade must cut loops, not quality.
+
+See also [`case-b-ledger-session.md`](case-b-ledger-session.md): a multi-slice session on a different app (Chinese PRD, Next.js + Prisma + SQLite) that chains tiering, Must admission, oscillation, carry-over, hard-risk A′ under autonomy and an AC-defect.
